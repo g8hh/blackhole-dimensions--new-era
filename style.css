@@ -1,0 +1,27 @@
+*{
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+.mass{
+    font-size: 175%;
+}
+.massNum{
+    font-size: 150%;
+    color: #C1FFE4;
+}
+.tab{
+    height: 50px;    
+    width: 150px;
+    font-size: 100%;
+}
+.dim{
+    height: 50px;
+    width: 1200px;
+    font-size: 105%;
+}
+.buymax{
+    height: 50px;
+    width: 150px;
+    font-size: 105%;
+}
