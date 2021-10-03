@@ -50,6 +50,32 @@ function loader(place,basicNum){
     }
 }
 
+//加载升级等
+function NotOmegaLoader(place,basicNum){
+    var l = place.length
+    if(inJson(saveStr,place)){
+        switch(l){
+            case 1:player[place[0]] = (saveStr[place[0]]);break
+            case 2:player[place[0]][place[1]] = (saveStr[place[0]][place[1]]);break
+            case 3:player[place[0]][place[1]][place[2]] = (saveStr[place[0]][place[1]][place[2]]);break
+            case 4:player[place[0]][place[1]][place[2]][place[3]] = (saveStr[place[0]][place[1]][place[2]][place[3]]);break
+            case 5:player[place[0]][place[1]][place[2]][place[3]][place[4]] = (saveStr[place[0]][place[1]][place[2]][place[3]][place[4]]);break
+            case 6:player[place[0]][place[1]][place[2]][place[3]][place[4]][place[5]] = (saveStr[place[0]][place[1]][place[2]][place[3]][place[4]][place[5]]);break
+            case 7:player[place[0]][place[1]][place[2]][place[3]][place[4]][place[5]][place[6]] = (saveStr[place[0]][place[1]][place[2]][place[3]][place[4]][place[5]][place[6]]);break
+        }
+    }else{
+        switch(l){
+            case 1:player[place[0]] = basicNum;break
+            case 2:player[place[0]][place[1]] = basicNum;break
+            case 3:player[place[0]][place[1]][place[2]] = basicNum;break
+            case 4:player[place[0]][place[1]][place[2]][place[3]] = basicNum;break
+            case 5:player[place[0]][place[1]][place[2]][place[3]][place[4]] = basicNum;break
+            case 6:player[place[0]][place[1]][place[2]][place[3]][place[4]][place[5]] = basicNum;break
+            case 7:player[place[0]][place[1]][place[2]][place[3]][place[4]][place[5]][place[6]] = basicNum;break
+        }
+    }
+}
+
 function getBasicDimDesp(dimName,dimNum,itemName,mult,procmult,number){
     return `${dimName}${chsNum[dimNum]}维x${format(mult)}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${format(number,0)}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${itemName}生产x${format(procmult)}`
 }
@@ -88,4 +114,23 @@ function expRoot(num,root){
 function expRootSoftcap(num,start,power){
     if(num.lte(start)) return num;
     return ten.pow(num.log10().sub(start.log10()).root(power)).pow(start.log10().pow(one.sub(one.div(power))))
+}
+
+function normal(id,extraClass = []){
+    var classes = ""
+    for(i in extraClass) classes += " "+extraClass
+    if(classes != "") classes = classes.substr(1)
+    document.getElementById(id).className = classes
+}
+
+function red(id,extraClass = []){
+    var classes = "red"
+    for(i in extraClass) classes += " "+extraClass
+    document.getElementById(id).className = classes
+}
+
+function lime(id,extraClass = []){
+    var classes = "lime"
+    for(i in extraClass) classes += " "+extraClass
+    document.getElementById(id).className = classes
 }

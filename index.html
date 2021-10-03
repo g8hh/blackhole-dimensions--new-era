@@ -15,6 +15,8 @@
         <script src = "js/layers/td.js"></script>
         <script src = "js/layers/layer1.js"></script>
         <script src = "js/layers/layer2.js"></script>
+        <script src = "js/layers/layer3.js"></script>
+        <script src = "js/layers/cd.js"></script>
         <script src = "js/game.js"></script>
 
         <title>黑洞维度3.0-新纪元v0.1</title>
@@ -25,11 +27,12 @@
             <br />
             <br />
             <h2 id=mass class="mass">黑洞质量 :  <mass id=massNum class="massNum"></mass> <mass id=massProc class="massProc"></mass></h2>
-            <p>v0.1 当前endgame:1.79e308质量</p>
+            <p>v0.2 当前endgame:3.74e693质量</p>
             <br />
             <!--一层菜单-->
-            <button onclick="FirstTab = '设置';SecondTab = '设置'" id=tab_settings class="tab">设置</button>
-            <button onclick="FirstTab = '物质维度';SecondTab = '黑洞维度'" id=tab_md class="tab">物质维度</button>
+            <button onclick="FirstTab = '设置';SecondTab = '设置'" class="tab" id=tab_settings>设置</button>
+            <button onclick="FirstTab = '物质维度';SecondTab = '黑洞维度'" class="tab" id=tab_md>物质维度</button>
+            <button onclick="if(player.bestMass.lt(Number.MAX_VALUE)) return;FirstTab = '塌缩';SecondTab = '塌缩升级'" class="tab" id=tab_rl3>塌缩</button>
             <br /><br />
             <!--二层菜单-->
             <!--设置-->
@@ -42,6 +45,11 @@
             <subtab id=subtab_md>
                 <button onclick="SecondTab = '黑洞维度'" id=tab_bd class="tab">黑洞维度</button>
                 <button onclick="SecondTab = '时间维度'" id=tab_td class="tab">时间维度</button>
+            </subtab>
+            <!--塌缩-->
+            <subtab id=subtab_rl3>
+                <button onclick="SecondTab = '塌缩升级'" id=tab_rl3upg class="tab">塌缩升级</button>
+                <button onclick="if(!hasUpgrade('cu',14)) return;SecondTab = '奇点维度'" id=tab_rl3dim class="tab">奇点维度</button>
             </subtab>
             <br /><br /><br /><br />
 
@@ -61,6 +69,30 @@
                 <button id=td1 onclick="buytd(1)" class="dim"></button><br /><br />
                 <button id=td2 onclick="buytd(2)" class="dim"></button><br /><br />
                 <button id=td3 onclick="buytd(3)" class="dim"></button>
+            </tab>
+
+            <tab id=rl3upg>
+                <subItem id=cp></subItem><br /><br />
+                <button id=rl3 onclick="doRl3()" class="dim"></button><br /><br />
+                <button id=resetCU onclick="resetCU()" class="dim">重置塌缩升级</button><br />
+                <button id=cu11 onclick="buycu(11)" class="upg"></button>
+                <button id=cu12 onclick="buycu(12)" class="upg"></button>
+                <button id=cu13 onclick="buycu(13)" class="upg"></button>
+                <button id=cu14 onclick="buycu(14)" class="upg"></button>
+                <button id=cu15 onclick="buycu(15)" class="upg"></button><br />
+                <button id=cu21 onclick="buycu(21)" class="upg"></button>
+                <button id=cu22 onclick="buycu(22)" class="upg"></button>
+                <button id=cu23 onclick="buycu(23)" class="upg"></button>
+                <button id=cu24 onclick="buycu(24)" class="upg"></button>
+                <button id=cu25 onclick="buycu(25)" class="upg"></button><br />
+            </tab>
+            <tab id=cd>
+                <subItem id=ce></subItem><br /><br />
+                <button id=buyMaxcd onclick="buyMaxcd()" class="buymax">购买最大</button><br /><br />
+                <button id=cd0 onclick="buycd(0)" class="dim"></button><br /><br />
+                <button id=cd1 onclick="buycd(1)" class="dim"></button><br /><br />
+                <button id=cd2 onclick="buycd(2)" class="dim"></button><br /><br />
+                <button id=cd3 onclick="buycd(3)" class="dim"></button>
             </tab>
         </app>
     </body>

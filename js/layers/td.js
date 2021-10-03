@@ -3,7 +3,8 @@ var TDcost = [n(1e8),n(1e16),n(1e64),n(1e216)]
 var TDcostMult = [n(10),n(100),(1e8),n(1e10)]
 function buyMaxtd(){
     for(i in basicDimNums) buytd(i)
-}
+    if(hasUpgrade("cu",21)) for(i in basicDimNums) buybd(i)
+}    
 function getTSEffExp(){
     var exp = n(0.2)
     exp = exp.mul(getRl1Exp())
@@ -12,25 +13,30 @@ function getTSEffExp(){
 function getTSEff(dimNum){
     dimNum = Number(dimNum)
     var eff = player.ts.add(1).pow(getTSEffExp()).root((dimNum+1)**0.5)
-    if(dimNum == 3) eff = eff.cbrt().div(31.4).add(1)
+    if(dimNum == 3) eff = eff.cbrt().div(31.4).sub(1**0.333/31.4).add(1)
     eff = powsoftcap(eff,n(1e10),2.5)
+    eff = powsoftcap(eff,n("1e50"),1.25)
     return eff
 }
 function getAlltdMult(){
     var mult = n(1)
     mult = mult.mul(getRl1Mult())
+    if(hasUpgrade("cu",15)) mult = mult.mul(cuEff(15))
+    mult= mult.mul(getCEEff())
     return mult
 }
 function getAnytdMult(dimNum){
     var mult = tdMult.all
     var level = player.td[dimNum].level
-    if(level.gte(300)) level = level.div(1.5).add(100)
+    //if(level.gte(300)) level = level.div(1.2).add(60)
     level = powsoftcap(level,n(300),1.25)
     mult = mult.mul(gettdLevelBoostBase().pow(level))
     return mult
 }
 function gettdLevelBoostBase(dimNum){
     var base = n(2)
+    if(hasUpgrade("cu",13)) base = base.add(cuEff(13))
+    if(hasUpgrade("cu",23)) base = base.add(cuEff(23))
     return base
 }
 function buytd(dimNum){

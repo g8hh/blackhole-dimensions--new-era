@@ -1,24 +1,27 @@
-function getMaxMass(){
-    var limit = n(Number.MAX_VALUE)
-    return limit
-}
-
-
 var bdMult = {}
 var BDcost = [n(10),n(1000),n(1e9),n(1e64)]
 var BDcostMult = [n(100),n(1000),(1e4),n(1e8)]
+
+function getMinMass(){
+    var min = n(0)
+    if(hasUpgrade("cu",25)) min = cuEff(25).minMass
+    return min
+}
+
 function buyMaxbd(){
     for(i in basicDimNums) buybd(i)
+    if(hasUpgrade("cu",21)) for(i in basicDimNums) buytd(i)
 }
 function getAllbdMult(){
     var mult = n(1)
     mult = mult.mul(getRl1Mult())
+    mult= mult.mul(getCEEff())
     return mult
 }
 function getAnybdMult(dimNum){
     var mult = bdMult.all
     var level = player.bd[dimNum].level
-    if(level.gte(150)) level = level.div(1.5).add(50)
+    //if(level.gte(150)) level = level.div(1.25).add(30)
     level = powsoftcap(level,n(150),1.25)
     mult = mult.mul(getbdLevelBoostBase().pow(level))
     mult = mult.mul(getTSEff(dimNum))
@@ -26,6 +29,8 @@ function getAnybdMult(dimNum){
 }
 function getbdLevelBoostBase(dimNum){
     var base = n(2)
+    if(hasUpgrade("cu",13)) base = base.add(cuEff(13))
+    if(hasUpgrade("cu",23)) base = base.add(cuEff(23))
     return base
 }
 function buybd(dimNum){
@@ -50,10 +55,11 @@ function updatebd(){
     //rl2!
     proc = proc.pow(getRl2Exp())
     //sc
-    if(proc.gte(Number.MAX_VALUE)) proc = proc.div(1e25).add(Number.MAX_VALUE)
-    proc = powsoftcap(proc,n(Number.MAX_VALUE),1.25)
+    if(proc.gte(Number.MAX_VALUE)) proc = proc.div(1e20).add(Number.MAX_VALUE)
+    proc = powsoftcap(proc,n("1e616"),1.25)
 
-    player.mass = player.mass.add(proc.mul(diff)).min(getMaxMass())
+    player.mass = player.mass.add(proc.mul(diff)).min(getMaxMass()).max(getMinMass())
+    player.bestMass = player.bestMass.max(player.mass)
 
     //显示部分!
     w("massNum",`${format(player.mass,0)}`)

@@ -25,3 +25,16 @@
     width: 150px;
     font-size: 105%;
 }
+.red{
+    color: black;
+    background-color: red;
+}
+.lime{
+    color: black;
+    background-color: lime;
+}
+.upg{
+    height: 125px;
+    width: 350px;
+    font-size: 100%;
+}
