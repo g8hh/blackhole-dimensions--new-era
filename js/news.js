@@ -42,6 +42,9 @@ newsArray = [
     [`您正在游玩:${(Math.random()<=0.5?FirstTab:SecondTab)}模拟器. - QwQe308`,toggle(1)],
     [`生命,宇宙以及一切的答案-反正不是42,是1.79e308. - QwQe308`,toggle(1)],
     [`作者qwq说：“有新闻条可以发给我”于是就有了这条新闻. - Ηαεκφζ JACK`,toggle(1)],
+    ["我在人群中看见了拉普拉斯，史瓦西，惠勒和霍金 - 神之海",toggle(6)],
+    ["You Need Do ↑↑↓↓←→←→BABA,Then You\'ll Be Able To Reach The Endgame - 陌尘",toggle(14)],
+    ["“世俗总要男人无惧无畏~”当然面对QwQ的黑洞质量还是要怂一怂的 - 陌尘",toggle(14)],
 ];} 
 var s;
 var scrollTimeouts = []; 
