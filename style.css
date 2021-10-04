@@ -2,6 +2,7 @@
     text-align: center;
     background-color: black;
     color: white;
+    user-select: none;
 }
 .mass{
     font-size: 175%;
