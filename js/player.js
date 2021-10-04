@@ -1,5 +1,5 @@
 function calcPlayer(){
-    player.version = 0.1
+    player.version = 0.221
     loader(["mass"],n(0))
     loader(["bestMass"],n(0))
     //bd

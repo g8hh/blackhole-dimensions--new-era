@@ -28,18 +28,18 @@ var cu = {
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },
     13:{
-        desp(){return "物质维度购买倍率的底数+0.03.(Tip:厚积而薄发...)"},
-        effect(){return n(0.03)},
+        desp(){return "物质维度购买倍率的底数+0.02.(Tip:厚积而薄发...)"},
+        effect(){return n(0.02)},
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },
     14:{
-        desp(){return "解锁奇点维度.奇点维度效果指数+0.04.(Tip:延展性强...)"},
-        effect(){return n(0.04)},
+        desp(){return "解锁奇点维度.奇点维度效果指数+0.03.(Tip:延展性强...)"},
+        effect(){return n(0.03)},
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },
     15:{
-        desp(){return "时间碎片^0.003加成时间维度.(Tip:配合rl1...)"},
-        effect(){return player.ts.add(1).pow(0.003)},
+        desp(){return "时间碎片^0.002加成时间维度.(Tip:配合rl1...)"},
+        effect(){return player.ts.add(1).pow(0.002)},
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },
     21:{
@@ -53,18 +53,18 @@ var cu = {
         cost(){return n(3).pow(getCuCostPower(2)).floor()}
     },
     23:{
-        desp(){return "物质维度购买倍率的底数+0.04."},
-        effect(){return n(0.04)},
+        desp(){return "物质维度购买倍率的底数+0.03."},
+        effect(){return n(0.03)},
         cost(){return n(3).pow(getCuCostPower(2)).floor()}
     },
     24:{
-        desp(){return "奇点维度效果指数+0.06."},
-        effect(){return n(0.06)},
+        desp(){return "奇点维度效果指数+0.04."},
+        effect(){return n(0.04)},
         cost(){return n(3).pow(getCuCostPower(2)).floor()}
     },
     25:{
-        desp(){return "物质不会低于1e10,时间扭曲的1000倍率软上限被空间扭曲延迟(x n^10)"},
-        effect(){return {minMass:n(1e10),sc:getRl2Exp().pow(10)}},
+        desp(){return "物质不会低于1e10,时间扭曲的1000倍率软上限被空间扭曲延迟(x n^8)"},
+        effect(){return {minMass:n(1e10),sc:getRl2Exp().pow(8)}},
         cost(){return n(3).pow(getCuCostPower(2)).floor()}
     },
 }
