@@ -18,16 +18,18 @@
         <script src = "js/layers/layer3.js"></script>
         <script src = "js/layers/cd.js"></script>
         <script src = "js/game.js"></script>
+        <script src = "js/news.js"></script>
 
-        <title>黑洞维度3.0-新纪元v0.1</title>
+        <title>黑洞维度3.0-新纪元</title>
 
     </head>
-    <body onload = load()>
+    <body onload = load();doodooWater()>
         <app>
             <br />
             <br />
             <h2 id=mass class="mass">黑洞质量 :  <mass id=massNum class="massNum"></mass> <mass id=massProc class="massProc"></mass></h2>
-            <p>v0.2 当前endgame:3.74e693质量</p>
+            <p>v0.21 - 新闻条! 当前endgame:3.74e693质量</p>
+            <p id="news" style="transform: translateX(-2512px); transition: transform 35.33s linear 0s;">testing 123</p>
             <br />
             <!--一层菜单-->
             <button onclick="FirstTab = '设置';SecondTab = '设置'" class="tab" id=tab_settings>设置</button>
