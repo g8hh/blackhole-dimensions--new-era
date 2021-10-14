@@ -13,7 +13,7 @@ newsArray = [
     ["寻找白洞中…… - 神之海",toggle(6)],
     ["你有尝试过往黑洞里丢奇异物质吗? - 神之海",toggle(7)],
     ["传说中有一个包裹着真理所在的无边无际的虚空. - 银千叶(拥有1e11451.4创世神谕)",toggle(8)],
-    [".............................................................................................................有一位未知用户传下了一道加密信息.破译中...................................>破译中<.......................................................................................................................>...破译失败 正在重试...<.....................................................................................................................................*你破译出来了一串数字:1050424901.................>...核对中...<.....................................................................................................................................................................似乎是一串Q群号? - QwQe308",toggle(9)],
+    ["有一位未知用户传下了一道加密信息.破译中——————————————————————————————————————————————————————————————————————————————>破译中<————————————————————————————————————————————————————————————————————————————————>——破译失败 正在重试——<————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————*你破译出来了一串数字:1050424901——————————————————————>——核对中——<——————————————————————————————————————————————————————————————————————————————————————————————————————————————————似乎是一串Q群号? - QwQe308",toggle(9)],
     ["宇宙要坍塌了 救......>失去联系<...... - QwQe308",toggle(10)&&player.bestMass.gte(Number.MAX_VALUE)],
     ["Found NaN In Your Save!Auto Fix It? - QwQe308",toggle(11)],
     ["吾辈男儿当自强，吃个黑洞好凉凉 - 鸭子",toggle(12)],
@@ -30,7 +30,6 @@ newsArray = [
     [`在今天，只有在今天你才可以拨打电话15757610937去获得1~600物质。只有在今天你可以达到无限，超越无限。[截止日期: ${t.getDate()}号] - 曦`,toggle(3)],
     ["《时间简史》里说过，世界上任何物质都有一个与其相反的物质，有你就有反你，你和反你相接触就会产生爆炸，消失在该平行宇宙，黑洞也不例外。与之相反的是白洞 产生爆炸的能量相当于1^80亿万吨TNT爆炸的能量 - 陌尘",toggle(14)],
     ["黑洞上撒点反物质……嗯～美味 - 鸭子",toggle(12)],
-    ["1^80亿万=1 - 曦",toggle(13)],
     ["如果一个黑洞丢出了一个袋鼠 那么几个袋鼠可以丢出一个黑洞呢 - 曦",toggle(13)],
     ["黑洞能产生黑洞吗?黑洞产生黑洞是怎么一回事呢﹖黑洞相信大家都很熟悉，但是黑洞质能产生黑洞是怎么回事呢﹖黑洞能生产黑洞，其实是“黑洞““分裂”。那么黑洞为什么可以分裂，相信大家都很好奇是怎么回事。大家可能会感到很惊讶，黑洞能怎么分裂呢﹖但事实就是这样，QwQ也感到非常惊讶。那么这就是关于黑洞生产黑洞的事情了，大家有没有觉得很神奇呢? - 辉影神秘",toggle(14)],
     ["最新消息，我宇宙出现一无证黑洞，现正于Q-WQ星系袭击行星，请各位行星待在本星系内，待有关创造者处理 - 鸭子",toggle(12)],
@@ -49,6 +48,7 @@ newsArray = [
 var s;
 var scrollTimeouts = []; 
 var nextMsgIndex;
+var newsLength;
 function doodooWater() {
   s = document.getElementById("news");
   scrollNextMessage();
@@ -67,10 +67,12 @@ function scrollNextMessage() {
   scrollTimeouts.forEach(function(v) {clearTimeout(v);});
   scrollTimeouts = [];
     
+  var newsLength = newsArray[nextMsgIndex][0].length
+
   //set the text
   s.textContent = newsArray[nextMsgIndex][0];
   //get the parent width so we can start the message beyond it
-  let parentWidth = s.parentElement.clientWidth;
+  let parentWidth = s.parentElement.clientWidth + newsLength * 15;
 
   //set the transition to blank so the move happens immediately
   s.style.transition = '';
@@ -81,7 +83,10 @@ function scrollNextMessage() {
   scrollTimeouts.push(setTimeout( function() {
     //distance to travel is s.parentElement.clientWidth + s.clientWidth + parent padding
     //we want to travel at rate pixels per second so we need to travel for (distance / rate) seconds
-    let dist = s.parentElement.clientWidth + s.clientWidth + 20; //20 is div_container padding
+    newsLength = newsArray[nextMsgIndex][0].length
+    let parentWidth = s.parentElement.clientWidth + newsLength * 10;
+    s.style.transform = 'translateX('+parentWidth+'px)';
+    let dist = s.parentElement.clientWidth + s.clientWidth + 20 + newsLength * 10; //20 is div_container padding
     let rate = 140; //change this value to change the scroll speed
     let transformDuration = dist / rate;
 

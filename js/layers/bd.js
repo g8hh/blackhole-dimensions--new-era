@@ -20,9 +20,7 @@ function getAllbdMult(){
 }
 function getAnybdMult(dimNum){
     var mult = bdMult.all
-    var level = player.bd[dimNum].level
-    //if(level.gte(150)) level = level.div(1.25).add(30)
-    level = powsoftcap(level,n(150),1.25)
+    var level = sc("bd",player.bd[dimNum].level)
     mult = mult.mul(getbdLevelBoostBase().pow(level))
     mult = mult.mul(getTSEff(dimNum))
     return mult
@@ -55,8 +53,7 @@ function updatebd(){
     //rl2!
     proc = proc.pow(getRl2Exp())
     //sc
-    if(proc.gte(Number.MAX_VALUE)) proc = proc.div(1e20).add(Number.MAX_VALUE)
-    proc = powsoftcap(proc,n("1e616"),1.25)
+    proc = sc("mass",proc)
 
     player.mass = player.mass.add(proc.mul(diff)).min(getMaxMass()).max(getMinMass())
     player.bestMass = player.bestMass.max(player.mass)
@@ -66,5 +63,5 @@ function updatebd(){
     w("massProc",`(+ ${format(proc,0)} /s)`)
     if(SecondTab!="黑洞维度") return close("bd")
     open("bd")
-    for(i in basicDimNums) w("bd"+i,getBasicDimDesp("黑洞",i,"物质",bdMult[i],player.bd[i].procmult,player.bd[i].num)+"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+getBasicBuyButtonDesp(showBulkBuy(player.mass,BDcost[i],player.bd[i].level,BDcostMult[i]),"物质"))
+    for(i in basicDimNums) w("bd"+i,getBasicDimDesp("黑洞",i,"物质",bdMult[i],player.bd[i].procmult,player.bd[i].num,sc("bd",player.bd[i].level,false))+"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+getBasicBuyButtonDesp(showBulkBuy(player.mass,BDcost[i],player.bd[i].level,BDcostMult[i]),"物质"))
 }

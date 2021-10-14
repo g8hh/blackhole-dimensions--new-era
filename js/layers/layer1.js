@@ -3,17 +3,11 @@ function getRl1MultExp(){
     return exp
 }
 function getRl1Mult(mass = player.rl1){
-    var mult = mass.add(1).pow(getRl1MultExp())
-    var sc1Start = n(1000)
-    if(hasUpgrade("cu",25)) sc1Start = sc1Start.mul(cuEff(25).sc)
-    mult = powsoftcap(mult,sc1Start,1.25)
-    mult = powsoftcap(mult,n(1e6),1.5)
+    var mult = sc("rl1mult",mass.add(1).pow(getRl1MultExp()),mass == player.rl2)
     return mult
 }
 function getRl1Exp(mass = player.rl1){
-    var exp = mass.add(1).log10().div(2).add(10).log10().pow(0.33)
-    exp = powsoftcap(exp,n(1.3),1.25)
-    exp = powsoftcap(exp,n(1.35),1.5)
+    var exp = sc("rl1exp",mass.add(1).log10().div(2).add(10).log10().pow(0.33),mass == player.rl2)
     return exp
 }
 function doRl1(){

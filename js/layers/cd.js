@@ -1,6 +1,6 @@
 var cdMult = {}
-var CDcost = [n(1),n(4),n(9),n(16)]
-var CDcostMult = [n(2),n(3),(4),n(5)]
+var CDcost = [n(1),n(8),n(64),n(256)]
+var CDcostMult = [n(2),n(4),(8),n(16)]
 function buyMaxcd(){
     for(i in basicDimNums) buycd(i)
 }
@@ -24,6 +24,7 @@ function getAnycdMult(dimNum){
     var mult = cdMult.all
     var level = player.cd[dimNum].level
     mult = mult.mul(getcdLevelBoostBase().pow(level))
+    if(dimNum != 0) mult = mult.div(10)
     return mult
 }
 function getcdLevelBoostBase(dimNum){
@@ -57,5 +58,5 @@ function updatecd(){
     if(SecondTab!="奇点维度") return close("cd")
     open("cd")
     w("ce",`您有 ${format(player.ce,0)} 奇点能量(+ ${format(proc)} /s) 这使得物质维度x${format(getCEEff())}) (奇点效果指数:${format(getCEEffExp(),3)})`)
-    for(i in basicDimNums) w("cd"+i,getBasicDimDesp("奇点",i,"奇点能量",cdMult[i],player.cd[i].procmult,player.cd[i].num)+"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+getBasicBuyButtonDesp(showBulkBuy(player.cp,CDcost[i],player.cd[i].level,CDcostMult[i]),"塌缩点数"))
+    for(i in basicDimNums) w("cd"+i,getBasicDimDesp("奇点",i,"奇点能量",cdMult[i],player.cd[i].procmult,player.cd[i].num,sc("cd",player.cd[i].level,false))+"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+getBasicBuyButtonDesp(showBulkBuy(player.cp,CDcost[i],player.cd[i].level,CDcostMult[i]),"塌缩点数"))
 }

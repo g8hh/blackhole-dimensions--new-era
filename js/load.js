@@ -10,6 +10,7 @@ function load(save = null){
     calcPlayer();
     //window.alert("test")
     fixSave()
+    player.version = 0.23
 };
 function save(){
     if(toClearSave){
@@ -24,4 +25,15 @@ function save(){
     }
 };
 
-function fixSave(){};
+function fixSave(){
+    if(saveStr.version < 0.23){
+        if(!player.cp.eq(0)) doRl3(true)
+        player.ce = n(0)
+        for(i in basicDimNums){
+            player.cd[i].num = n(0)
+            player.cd[i].level = n(0)
+            player.cd[i].procmult = n(1)
+        }
+        player.cd[0].procmult = n(0)
+    }
+};

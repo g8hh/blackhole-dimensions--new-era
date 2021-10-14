@@ -76,8 +76,8 @@ function NotOmegaLoader(place,basicNum){
     }
 }
 
-function getBasicDimDesp(dimName,dimNum,itemName,mult,procmult,number){
-    return `${dimName}${chsNum[dimNum]}维x${format(mult)}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${format(number,0)}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${itemName}生产x${format(procmult)}`
+function getBasicDimDesp(dimName,dimNum,itemName,mult,procmult,number,level){
+    return `${dimName}${chsNum[dimNum]}维x${format(mult)}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${format(number,0)}(${format(level)})&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${itemName}生产x${format(procmult)}`
 }
 function getBasicBuyButtonDesp(AJsonThatIncludesBulkAndCost,theThingsYouCostName){
     return `点击以购买${format(AJsonThatIncludesBulkAndCost.bulk,0)}个 总价格:${format(AJsonThatIncludesBulkAndCost.cost)}${theThingsYouCostName}`

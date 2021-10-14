@@ -27,9 +27,7 @@ function getAlltdMult(){
 }
 function getAnytdMult(dimNum){
     var mult = tdMult.all
-    var level = player.td[dimNum].level
-    //if(level.gte(300)) level = level.div(1.2).add(60)
-    level = powsoftcap(level,n(300),1.25)
+    var level = sc("td",player.td[dimNum].level)
     mult = mult.mul(gettdLevelBoostBase().pow(level))
     return mult
 }
@@ -63,5 +61,5 @@ function updatetd(){
     if(SecondTab!="时间维度") return close("td")
     open("td")
     w("ts",`您有 ${format(player.ts,0)} 时间碎片(+ ${format(proc)} /s) 这使得黑洞维度x${format(getTSEff(0))}(对高维效果减弱)`)
-    for(i in basicDimNums) w("td"+i,getBasicDimDesp("时间",i,"时间碎片",tdMult[i],player.td[i].procmult,player.td[i].num)+"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+getBasicBuyButtonDesp(showBulkBuy(player.mass,TDcost[i],player.td[i].level,TDcostMult[i]),"物质"))
+    for(i in basicDimNums) w("td"+i,getBasicDimDesp("时间",i,"时间碎片",tdMult[i],player.td[i].procmult,player.td[i].num,sc("td",player.td[i].level,false))+"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+getBasicBuyButtonDesp(showBulkBuy(player.mass,TDcost[i],player.td[i].level,TDcostMult[i]),"物质"))
 }

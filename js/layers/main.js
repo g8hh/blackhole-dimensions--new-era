@@ -8,6 +8,7 @@ function updateMain(){
     updaterl2()
     updaterl3()
     updatecd()
+    updatesc()
 }
 
 function updateTab(){

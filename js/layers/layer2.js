@@ -1,7 +1,5 @@
 function getRl2Exp(mass = player.rl2){
-    var exp = mass.div(1e50).add(1).log10().div(800).add(1).log10().add(1)
-    exp = powsoftcap(exp,n(1.1),1.25)
-    exp = powsoftcap(exp,n(1.2),1.5)
+    var exp = sc("rl2",mass.div(1e50).add(1).log10().div(800).add(1).log10().add(1),mass == player.rl2)
     return exp
 }
 function doRl2(){
