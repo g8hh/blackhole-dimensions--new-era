@@ -5,11 +5,55 @@ var softcaps = {
             name:"时间扭曲(倍率加成)",
             start(){
                 var start = n(1000)
-                if(hasUpgrade("cu",25)) start = start.mul(cuEff(25).sc)
+                if(hasRl3Upgrade(25)) start = start.mul(cuEff(25).sc)
                 return start
             },
             pow(){
                 var pow = n(2)
+                return pow
+            },
+        },
+        mass:{
+            name:"黑洞质量",
+            start(){
+                var start = n("1e500")
+                return start
+            },
+            pow(){
+                var pow = n(1.2)
+                return pow
+            },
+        },
+        bd:{
+            name:"黑洞维度等级",
+            start(){
+                var start = n(250)
+                return start
+            },
+            pow(){
+                var pow = n(1.25)
+                return pow
+            },
+        },
+        td:{
+            name:"时间维度等级",
+            start(){
+                var start = n(500)
+                return start
+            },
+            pow(){
+                var pow = n(1.25)
+                return pow
+            },
+        },
+        tsEff:{
+            name:"时间维度效果",
+            start(){
+                var start = n(1e10)
+                return start
+            },
+            pow(){
+                var pow = n(2.5)
                 return pow
             },
         },
@@ -99,13 +143,13 @@ function sc(name,num,show = true){
                     num = num.sub(scStart).div(scPow).add(scStart)
                     break;
                 case "sc2":
-                    num = num.powsoftcap(num,scStart,scPow)
+                    num = powsoftcap(num,scStart,scPow)
                     break;
                 case "sc3":
-                    num = num.expRootSoftcap(num,scStart,scPow)
+                    num = expRootSoftcap(num,scStart,scPow)
                     break;
                 case "sc4":
-                    num = num.logsoftcap(num,scStart,scPow)
+                    num = logsoftcap(num,scStart,scPow)
                     break;
             }
             if(show) softcapStr[scType][name] = {name:scIndex.name,start:scStart,pow:scPow}

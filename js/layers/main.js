@@ -1,14 +1,18 @@
 var dimNerf = 2 //维度间产量变为其二次根
 
 function updateMain(){
+    updateTab()
+    updatesc()
+
     updatetd()
     updatebd()
-    updateTab()
     updaterl1()
     updaterl2()
+
     updaterl3()
     updatecd()
-    updatesc()
+    updaterl3cha()
+    updateAuto()
 }
 
 function updateTab(){
@@ -37,9 +41,18 @@ function updateTab(){
 function hotkey(){  
     var a=window.event.keyCode;  
     //64+字母序数
-    if(a==77){  
-        if(SecondTab == "黑洞维度") buyMaxbd()
-        if(SecondTab == "时间维度") buyMaxtd()
+    //alert(a)
+    switch(a){
+        //M
+        case 77:
+            if(SecondTab == "黑洞维度") buyMaxbd()
+            if(SecondTab == "时间维度") buyMaxtd()
+            break;
+
+        //F12
+        //case 123:
+            //devSpeed = 0
+            //while(true) alert("请勿点击F12!请刷新游戏.")
     }
 }
 document.onkeydown = hotkey;

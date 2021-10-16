@@ -3,32 +3,41 @@
         <meta charset="utf-8" />
 
         <link rel="stylesheet" type="text/css" href="style.css" />
+
         <script src = "support/OmegaNum.js"></script>
         <script src = "support/LZString.js"></script>
-        <script src = "js/format.js"></script>
-        <script src = "js/others.js"></script>
-        <script src = "js/functions.js"></script>
-        <script src = "js/player.js"></script>
-        <script src = "js/load.js"></script>
+
+        <script src = "js/support/format.js"></script>
+        <script src = "js/support/others.js"></script>
+        <script src = "js/support/functions.js"></script>
+
+        <script src = "js/save/player.js"></script>
+        <script src = "js/save/load.js"></script>
+
         <script src = "js/layers/main.js"></script>
-        <script src = "js/layers/bd.js"></script>
-        <script src = "js/layers/td.js"></script>
-        <script src = "js/layers/layer1.js"></script>
-        <script src = "js/layers/layer2.js"></script>
-        <script src = "js/layers/layer3.js"></script>
-        <script src = "js/layers/cd.js"></script>
-        <script src = "js/game.js"></script>
-        <script src = "js/news.js"></script>
+        <!--主游戏-->
+        <script src = "js/layers/mainLayers/bd.js"></script>
+        <script src = "js/layers/mainLayers/td.js"></script>
+        <script src = "js/layers/mainLayers/layer1.js"></script>
+        <script src = "js/layers/mainLayers/layer2.js"></script>
+        <!--塌缩-->
+        <script src = "js/layers/BigCrunch/layer3.js"></script>
+        <script src = "js/layers/BigCrunch/cd.js"></script>
+        <script src = "js/layers/BigCrunch/rl3challs.js"></script>
+
+        <script src = "js/support/game.js"></script>
+        <script src = "js/support/news.js"></script>
         <script src = "js/softcaps.js"></script>
+        <script src = "js/automations.js"></script>
 
         <title>黑洞维度3.0-新纪元</title>
 
     </head>
     <body onload = load();doodooWater()>
         <app>            
-            <p id="news" style="transform: translateX(-2512px); transition: transform 35.33s linear 0s;">testing 123</p>
+            <p id="news" style="transform: translateX(-2512px); transition: transform 35.33s linear 0s;"></p>
             <h2 id=mass class="mass">黑洞质量 :  <mass id=massNum class="massNum"></mass> <mass id=massProc class="massProc"></mass></h2>
-            <p>v0.23 - 游戏重平衡 + 软上限修改 当前endgame:8.2e500质量</p>
+            <p>v0.24 - 塌缩挑战 当前endgame:8.2e500质量</p>
             <br />
             <!--一层菜单-->
             <button onclick="FirstTab = '设置';SecondTab = '设置'" class="tab" id=tab_settings>设置</button>
@@ -51,12 +60,14 @@
             <!--塌缩-->
             <subtab id=subtab_rl3>
                 <button onclick="SecondTab = '塌缩升级'" id=tab_rl3upg class="tab">塌缩升级</button>
-                <button onclick="if(!hasUpgrade('cu',14)) return;SecondTab = '奇点维度'" id=tab_rl3dim class="tab">奇点维度</button>
+                <button onclick="if(!hasRl3Upgrade(14)) return;SecondTab = '奇点维度'" id=tab_rl3dim class="tab">奇点维度</button>
+                <button onclick="if(!hasRl3Upgrade(21)) return;SecondTab = '塌缩挑战'" id=tab_rl3cha class="tab">塌缩挑战</button>
             </subtab>
             <br /><br /><br />
 
             <tab id=bd>
-                <button id=buyMaxbd onclick="buyMaxbd()" class="buymax">购买最大(M)</button><br /><br />
+                <button id=buyMaxbd onclick="buyMaxbd()" class="buymax">购买最大(M)</button><br />
+                <subItem id=preBCTickspeed></subItem><br />
                 <button id=bd0 onclick="buybd(0)" class="dim"></button><br /><br />
                 <button id=bd1 onclick="buybd(1)" class="dim"></button><br /><br />
                 <button id=bd2 onclick="buybd(2)" class="dim"></button><br /><br />
@@ -81,12 +92,12 @@
                 <button id=cu12 onclick="buycu(12)" class="upg"></button>
                 <button id=cu13 onclick="buycu(13)" class="upg"></button>
                 <button id=cu14 onclick="buycu(14)" class="upg"></button>
-                <button id=cu15 onclick="buycu(15)" class="upg"></button><br />
+                <button id=cu15 onclick="buycu(15)" class="upg"></button><br>
                 <button id=cu21 onclick="buycu(21)" class="upg"></button>
                 <button id=cu22 onclick="buycu(22)" class="upg"></button>
                 <button id=cu23 onclick="buycu(23)" class="upg"></button>
                 <button id=cu24 onclick="buycu(24)" class="upg"></button>
-                <button id=cu25 onclick="buycu(25)" class="upg"></button><br />
+                <button id=cu25 onclick="buycu(25)" class="upg"></button><br>
             </tab>
             <tab id=cd>
                 <subItem id=ce></subItem><br /><br />
@@ -95,6 +106,20 @@
                 <button id=cd1 onclick="buycd(1)" class="dim"></button><br /><br />
                 <button id=cd2 onclick="buycd(2)" class="dim"></button><br /><br />
                 <button id=cd3 onclick="buycd(3)" class="dim"></button>
+            </tab>
+            <tab id=rl3chall>
+                <help>进入塌缩挑战时同时也会触发所有该挑战左侧的挑战,元挑战除外.达到塌缩目标以完成挑战.</help><br>
+                <button id=exitRl3Chall onclick="exitRl3Chall()" class="dim">退出塌缩挑战</button><br />
+                <button id=c10 onclick="enterRl3Chall(10)" class="upg"></button>
+                <button id=c11 onclick="enterRl3Chall(11)" class="upg"></button>
+                <button id=c12 onclick="enterRl3Chall(12)" class="upg"></button>
+                <button id=c13 onclick="enterRl3Chall(13)" class="upg"></button>
+                <button id=c14 onclick="enterRl3Chall(14)" class="upg"></button><br>
+                <button id=c20 onclick="enterRl3Chall(20)" class="upg"></button>
+                <button id=c21 onclick="enterRl3Chall(21)" class="upg"></button>
+                <button id=c22 onclick="enterRl3Chall(22)" class="upg"></button>
+                <button id=c23 onclick="enterRl3Chall(23)" class="upg"></button>
+                <button id=c24 onclick="enterRl3Chall(24)" class="upg"></button><br>
             </tab>
         </app>
     </body>
