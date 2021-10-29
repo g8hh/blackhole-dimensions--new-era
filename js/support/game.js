@@ -14,7 +14,7 @@ function loop(){
 }
 function game(diff){
     updateMain()
-    save()
+    if(devspeed!=0) save()
 }
 
 var tickdelay = setInterval(loop,1000/30)

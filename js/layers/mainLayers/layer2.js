@@ -3,8 +3,8 @@ function getRl2Exp(mass = player.rl2){
     return exp
 }
 function doRl2(){
-    if(player.mass.lt(1e150) || player.rl2.gte(player.mass)) return
-    player.rl2 = player.mass
+    if(player.mass.lt(1e150) || player.rl2.gte(player.mass)) if(!confirm("您将在条件不满足的情况下进行空间扭曲!这不会给您任何增益!是否重置?")) return
+    player.rl2 = player.mass.max(player.rl2)
 
     //reset
     player.mass = zero
@@ -20,6 +20,9 @@ function doRl2(){
     }
 
     player.rl1 = n(0)
+    
+    player.t = zero
+    player.c20Nerf = one
 }
 
 function updaterl2(){

@@ -3,6 +3,7 @@ function getRl1MultExp(){
     return exp
 }
 function getRl1Mult(mass = player.rl1){
+    if(inRl3Chall(12)) mass = mass.root(getRl3ChallEff(12))
     var mult = sc("rl1mult",mass.add(1).pow(getRl1MultExp()),mass == player.rl2)
     return mult
 }
@@ -11,8 +12,8 @@ function getRl1Exp(mass = player.rl1){
     return exp
 }
 function doRl1(){
-    if(player.mass.lt(1e30) || player.rl1.gte(player.mass)) return
-    player.rl1 = player.mass
+    if(player.mass.lt(1e30) || player.rl1.gte(player.mass)) if(!confirm("您将在条件不满足的情况下进行时间扭曲!这不会给您任何增益!是否重置?")) return
+    player.rl1 = player.mass.max(player.rl1)
 
     //reset
     player.mass = zero
@@ -26,6 +27,9 @@ function doRl1(){
         if(i == 0) player.td[i].procmult = zero
         else player.td[i].procmult = one
     }
+
+    player.t = zero
+    player.c20Nerf = one
 }
 
 function updaterl1(){

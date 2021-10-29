@@ -58,5 +58,6 @@ var automations = {
 }
 
 function updateAuto(){
-    for(i in automations) automations[i].automate()
+    if(player.auto=="on") for(i in automations) automations[i].automate()
+    w("autoStat",player.auto=="on"?"":"<warning class='redText'>自动化已禁用!请检查设置.</warning>")
 }

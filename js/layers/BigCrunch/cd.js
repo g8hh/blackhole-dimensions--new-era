@@ -42,6 +42,27 @@ function buycd(dimNum){
     player.cd[dimNum].level = player.cd[dimNum].level.add(bulkStat.bulk)
     player.cp = player.cp.sub(bulkStat.cost)
 }
+function getCpBoosterCostAndCostInc(){
+    var cost = n(2)
+    var costInc = n(2)
+    return {cost:cost,costInc:costInc}
+}
+function buyCpBooster(){
+    if(!hasRl3Upgrade(31)) return
+    var cost = getCpBoosterCostAndCostInc().cost
+    var costInc = getCpBoosterCostAndCostInc().costInc
+    var bulkStat = bulkBuy(player.cp,cost,player.cpBooster,costInc)
+    if(bulkStat.bulk.lt(1)) return
+    player.cpBooster = player.cpBooster.add(bulkStat.bulk)
+    player.cp = player.cp.sub(bulkStat.cost)
+}
+function getCpBoosterEff(){
+    if(!hasRl3Upgrade(31)) return one
+    var effBase = n(1.2)
+    var effNum = player.cpBooster
+    var eff = effBase.pow(effNum)
+    return eff
+}
 function updatecd(){
     //计算部分!
     var proc = n(1)
@@ -66,4 +87,10 @@ function updatecd(){
         if(bulkBuy(player.cp,CDcost[i],player.cd[i].level,CDcostMult[i]).bulk.gte(1)) grey("cd"+i,["dim"])
         else normal("cd"+i,["dim"])
     }
+    var cost = getCpBoosterCostAndCostInc().cost
+    var costInc = getCpBoosterCostAndCostInc().costInc
+    w("cpBooster",`您有${format(player.cpBooster)}个塌缩点倍增器,使得塌缩点x${format(getCpBoosterEff())}. 购买${format(showBulkBuy(player.cp,cost,player.cpBooster,costInc).bulk)}个 总价格:${format(showBulkBuy(player.cp,cost,player.cpBooster,costInc).cost)}${hasRl3Upgrade(31)?"":" 您必须拥有cu31才能购买/起效!"}`)
+    if(!hasRl3Upgrade(31)) red("cpBooster",["dim"])
+    else if(bulkBuy(player.cp,cost,player.cpBooster,costInc).bulk.gte(1)) grey("cpBooster",["dim"])
+    else normal("cpBooster",["dim"])
 }

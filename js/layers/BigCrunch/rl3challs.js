@@ -1,7 +1,17 @@
+var allChallDiff = n(1)
+
+function getAllChallDiff(){
+    var diffcultity = one
+    return diffcultity
+}
 var rl3chall = {
-    10:{desp(){return `时间碎片效果指数/${format(this.eff())}<br>奖励:黑洞零维自动化`},eff(){return n(1.1)}},
-    11:{desp(){return `所有维度倍率基于维度序数获得减益.(/${format(this.eff())}^x)<br>奖励:黑洞一维自动化`},eff(){return n(3)}},
-    20:{desp(){return `新增变量*时间速率*.每当你购买一个物质维度时,该时间速率/${format(this.eff())},因此产生的时间速率减益每秒^0.8.时间速率最低为e-10.<br>奖励:时间零维自动化`},eff(){return n(1.1)},update(){player.c20Nerf = player.c20Nerf.pow(n(0.8).pow(diff))}},
+    10:{desp(){return `时间碎片效果指数/${format(this.eff())}<br>奖励:黑洞零维自动化`},eff(){return n(1.1).pow(allChallDiff)}},
+    11:{desp(){return `所有维度倍率基于维度序数获得减益.(/${format(this.eff())}^x)<br>奖励:黑洞一维自动化`},eff(){return n(3).pow(allChallDiff)}},
+    12:{desp(){return `对于时间扭曲效果的物质计数变为其${format(this.eff())}次根.(即物质在效果公式里开根)<br>奖励:黑洞二维自动化`},eff(){return n(2).pow(allChallDiff)}},
+    13:{desp(){return `维度互相生产量变为其${format(this.eff())}次根,但同时黑洞低维倍率被黑洞高维购买倍率的${format(this.eff())}次根倍增.<br>奖励:黑洞三维自动化`},eff(){return n(2).pow(allChallDiff)}},
+    14:{desp(){return `cX4的挑战都会很有新意(?<br>物质上限变为其1.5次根,挑战目标改为:使时间碎片达到${format(this.eff())}(随物质要求变动).<br>奖励:???`},eff(){return getRl3Req().pow(allChallDiff)},specialGoal(){return player.ts.gte(this.eff())}},
+    20:{desp(){return `新增变量*时间速率*.每当你购买一个物质维度时,该时间速率/${format(this.eff())},因此产生的时间速率减益每秒^0.8.该减益最低为e-10.(当前:/${format(player.c20Nerf,2,true)})<br>奖励:时间零维自动化`},eff(){return n(1.05).pow(allChallDiff)},update(){player.c20Nerf = player.c20Nerf.pow(n(0.8).pow(diff))}},
+    21:{desp(){return `新增变量*t*(t=距离上次重置的时间).时间速率除以[(t^${format(this.eff())})/lg(质量+10)+1].(当前:/${format(this.totalEff(),2,true)})<br>奖励:时间一维自动化`},eff(){return n(0.75).mul(allChallDiff)},totalEff(){return player.t.pow(this.eff()).div(player.mass.add(10).log10()).add(1)},update(){player.t = player.t.add(diff)}},
 }
 
 function enterRl3Chall(id){
@@ -21,7 +31,7 @@ function enterRl3Chall(id){
 }
 function exitRl3Chall(force = false){
     if(player.chall == null) return
-    if(!confirm("你确定要退出挑战么?这会强制进行一次塌缩重置,并且你不能从中获取塌缩点数.同样的,你无法完成这个挑战.")) return
+    if(!force) if(!confirm("你确定要退出挑战么?这会强制进行一次塌缩重置,并且你不能从中获取塌缩点数.同样的,你无法完成这个挑战.")) return
     doRl3(true)
     player.chall = null
     player.activeChall = []
@@ -35,9 +45,13 @@ function hasRl3Chall(id){
 function getRl3ChallEff(id){
     return rl3chall[id].eff()
 }
+function getRl3ChallTotalEff(id){
+    return rl3chall[id].totalEff()
+}
 
 function checkRl3Chall(){
     if(!player.chall) return
+    if(!rl3chall[player.chall]) return
     if(rl3chall[player.chall].specialGoal){
         if(rl3chall[player.chall].specialGoal()){
             if(!player.challComp.includes(player.chall)){player.challComp.push(player.chall);exitRl3Chall(true)}
@@ -46,6 +60,7 @@ function checkRl3Chall(){
 }
 
 function updaterl3cha(){
+    allChallDiff = getAllChallDiff()
     checkRl3Chall()
     if(player.activeChall) for(i in player.activeChall) if(rl3chall[player.activeChall[i]].update) rl3chall[player.activeChall[i]].update()
     if(SecondTab!="塌缩挑战") return close("rl3chall")

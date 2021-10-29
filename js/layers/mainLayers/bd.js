@@ -3,7 +3,8 @@ var BDcost = [n(10),n(1000),n(1e9),n(1e64)]
 var BDcostMult = [n(100),n(1000),(1e4),n(1e8)]
 function getPreBCTickspeed(){
     var tickspeed = n(1)
-    if(inRl3Chall(20)) tickspeed = tickspeed.div(player.c20Nerf).max(1e-10)
+    if(inRl3Chall(20)) tickspeed = tickspeed.div(player.c20Nerf.max(1e-10))
+    if(inRl3Chall(21)) tickspeed = tickspeed.div(getRl3ChallTotalEff(21))
     return tickspeed
 }
 
@@ -23,13 +24,23 @@ function getAllbdMult(){
     mult= mult.mul(getCEEff())
     return mult
 }
-function getAnybdMult(dimNum){
+function getAnybdMult(dimNum,special = null){
+    if(special == "c12"){
+        dimNum = Number(dimNum)
+        var mult = n(1)
+        var level = sc("bd",player.bd[dimNum].level)
+        mult = mult.mul(getbdLevelBoostBase().pow(level))
+        mult = mult.mul(getTSEff(dimNum))
+        return mult
+    }
+    dimNum = Number(dimNum)
     var mult = bdMult.all
     var level = sc("bd",player.bd[dimNum].level)
     mult = mult.mul(getbdLevelBoostBase().pow(level))
     mult = mult.mul(getTSEff(dimNum))
     
     if(inRl3Chall(11)) mult = mult.div(getRl3ChallEff(11).pow(dimNum))
+    if(inRl3Chall(13)) if(dimNum < 3) mult = mult.mul(getAnybdMult(dimNum+1,"c12").root(getRl3ChallEff(13)))
 
     return mult
 }
@@ -66,11 +77,11 @@ function updatebd(){
     //sc
     proc = sc("mass",proc)
 
-    player.mass = player.mass.add(proc.mul(diff).mul(getPreBCTickspeed())).min(getMaxMass()).max(getMinMass())
+    player.mass = player.mass.add(proc.mul(diff).mul(getPreBCTickspeed())).max(getMinMass()).min(getMaxMass())
     player.bestMass = player.bestMass.max(player.mass)
 
     //显示部分!
-    if(player.bestMass.gte(Number.MAX_VALUE)) w(`preBCTickspeed`,`塌缩前阶段时间速率:x${format(getPreBCTickspeed())}`)
+    if(player.bestMass.gte(Number.MAX_VALUE)) w(`preBCTickspeed`,`塌缩前阶段时间速率:x${format(getPreBCTickspeed(),2,true)}`)
     else w(`preBCTickspeed`,``)
     w("massNum",`${format(player.mass,0)}`)
     w("massProc",`(+ ${format(proc,0)} /s)`)

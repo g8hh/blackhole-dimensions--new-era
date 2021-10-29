@@ -24,7 +24,7 @@ var cu = {
     },
     12:{
         desp(){return `物质上限^${format(this.effect())}.(Tip:您真的确定您能在无限后成吨的软上限中达到上限么)`},
-        effect(){return n(1.25)},
+        effect(){return n(1.2)},
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },
     13:{
@@ -39,7 +39,7 @@ var cu = {
     },
     15:{
         desp(){return `时间碎片加成时间维度.(x ${format(this.effect())})(Tip:配合rl1...)`},
-        effect(){return player.ts.add(1).pow(0.002)},
+        effect(){return player.ts.add(1).pow(0.005)},
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },
     21:{
@@ -49,7 +49,7 @@ var cu = {
     },
     22:{
         desp(){return `物质上限^${format(this.effect())}.`},
-        effect(){return n(1.3)},
+        effect(){return n(1.20)},
         cost(){return n(3).pow(getCuCostPower(2)).floor()}
     },
     23:{
@@ -64,8 +64,36 @@ var cu = {
     },
     25:{
         desp(){return `物质不会低于${format(this.effect().minMass)},时间扭曲的1000倍率软上限被空间扭曲延迟(x ${format(this.effect().sc)})`},
-        effect(){return {minMass:n(1e10),sc:getRl2Exp().pow(15)}},
+        effect(){
+            if(hasRl3Upgrade(35)) return {minMass:n(1e10).pow(cuEff(35).cu25),sc:getRl2Exp().pow(15).pow(cuEff(35).cu25)}
+            return {minMass:n(1e10),sc:getRl2Exp().pow(15)}
+        },
         cost(){return n(3).pow(getCuCostPower(2)).floor()}
+    },
+    31:{
+        desp(){return `解锁塌缩点倍增器.(Tip:解锁前准备好2塌缩点来购买倍增器...这个升级效果很强.)`},
+        effect(){return true},
+        cost(){return n(10).pow(getCuCostPower(3)).floor()}
+    },
+    32:{
+        desp(){return `物质上限被时间碎片倍增.(x${format(this.effect())})(Tip:在cu12和cu22前生效...).`},
+        effect(){return player.ts.add(1).pow(0.2)},
+        cost(){return n(10).pow(getCuCostPower(3)).floor()}
+    },
+    33:{
+        desp(){return `物质维度购买倍率的底数+${format(this.effect(),2,true)}(基于挑战完成数).`},
+        effect(){return n(0.015).mul(player.challComp.length**0.85)},
+        cost(){return n(10).pow(getCuCostPower(3)).floor()}
+    },
+    34:{
+        desp(){return `奇点维度效果指数+${format(this.effect(),2,true)}.(基于挑战完成数)`},
+        effect(){return n(0.02).mul(player.challComp.length**0.85)},       
+        cost(){return n(10).pow(getCuCostPower(3)).floor()}
+    },
+    35:{
+        desp(){return `基于挑战完成数,指数加成cu25效果(^${format(this.effect().cu25)}),并且减弱塌缩升级的价格增长(-^${format(this.effect().costInc)})`},
+        effect(){return {cu25:player.challComp.length**0.85*0.15+1,costInc:n(0.2)}},        
+        cost(){return n(10).pow(getCuCostPower(3)).floor()}
     },
 }
 
@@ -82,8 +110,11 @@ function resetCU(){
 }
 function getMaxMass(){
     var lim = n(Number.MAX_VALUE)
+    if(hasRl3Upgrade(32)) lim = lim.mul(cuEff(32))
+
     if(hasRl3Upgrade(12)) lim = lim.pow(cuEff(12))
     if(hasRl3Upgrade(22)) lim = lim.pow(cuEff(22))
+    if(inRl3Chall(14)) lim = lim.root(1.5)
     return lim
 }
 
@@ -94,6 +125,7 @@ function getRl3Req(){
 }
 function getCPGain(mass = player.mass){
     var gain = mass.root(getRl3Req().add(10).log10()).div(5).floor()
+    gain = gain.mul(getCpBoosterEff())
     return gain
 }
 
@@ -121,6 +153,9 @@ function doRl3(force = false){
 
     player.rl1 = n(0)
     player.rl2 = n(0)
+
+    player.t = zero
+    player.c20Nerf = one
 }
 
 function updaterl3(){

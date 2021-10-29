@@ -13,36 +13,36 @@ var softcaps = {
                 return pow
             },
         },
-        mass:{
+        /*mass:{
             name:"黑洞质量",
             start(){
-                var start = n("1e500")
+                var start = n("1e414")
                 return start
             },
             pow(){
-                var pow = n(1.2)
+                var pow = n(1.075)
                 return pow
             },
-        },
+        },*/
         bd:{
             name:"黑洞维度等级",
             start(){
-                var start = n(250)
+                var start = n(200)
                 return start
             },
             pow(){
-                var pow = n(1.25)
+                var pow = n(1.1)
                 return pow
             },
         },
         td:{
             name:"时间维度等级",
             start(){
-                var start = n(500)
+                var start = n(400)
                 return start
             },
             pow(){
-                var pow = n(1.25)
+                var pow = n(1.1)
                 return pow
             },
         },
@@ -100,7 +100,7 @@ var softcaps = {
                 return start
             },
             pow(){
-                var pow = n(2)
+                var pow = n(2.5)
                 return pow
             },
         },
@@ -111,7 +111,7 @@ var softcaps = {
                 return start
             },
             pow(){
-                var pow = n(2)
+                var pow = n(2.5)
                 return pow
             },
         },

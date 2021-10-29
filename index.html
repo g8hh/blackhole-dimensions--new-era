@@ -34,10 +34,11 @@
 
     </head>
     <body onload = load();doodooWater()>
-        <app>            
+        <app @touchmove.prevent>            
             <p id="news" style="transform: translateX(-2512px); transition: transform 35.33s linear 0s;"></p>
+            <autoStat id = "autoStat"></autoStat>
             <h2 id=mass class="mass">黑洞质量 :  <mass id=massNum class="massNum"></mass> <mass id=massProc class="massProc"></mass></h2>
-            <p>v0.24 - 塌缩挑战 当前endgame:8.2e500质量</p>
+            <p>v0.25 - 塌缩内容拓展 当前endgame:约1e550质量+4挑战</p>
             <br />
             <!--一层菜单-->
             <button onclick="FirstTab = '设置';SecondTab = '设置'" class="tab" id=tab_settings>设置</button>
@@ -49,7 +50,9 @@
             <subtab id=subtab_settings>
                 <button onclick="if(confirm('您确定要硬重置么')) toClearSave = true" class="tab" id="clearSave">清档</button>
                 <button onclick="prompt('您的存档:',saveStr)" id="export" class="tab">导出</button>
-                <button onclick="load(prompt('输入存档:'))" id="import" class="tab">导入</button><br>
+                <button onclick="load(prompt('输入存档:'))" id="import" class="tab">导入</button>
+                <button onclick="player.auto = 'on'" id="onAuto" class="tab">启用自动化</button>
+                <button onclick="player.auto = 'off'" id="offAutp" class="tab">禁用自动化</button><br>
                 <scIndex id = "scIndex"></scIndex>
             </subtab>
             <!--物质维度-->
@@ -75,6 +78,7 @@
                 <button id=rl1 onclick="doRl1()" class="dim"></button><br /><br />
                 <button id=rl2 onclick="doRl2()" class="dim"></button>
             </tab>
+
             <tab id=td>
                 <subItem id=ts></subItem><br /><br />
                 <button id=buyMaxtd onclick="buyMaxtd()" class="buymax">购买最大(M)</button><br /><br />
@@ -93,34 +97,47 @@
                 <button id=cu13 onclick="buycu(13)" class="upg"></button>
                 <button id=cu14 onclick="buycu(14)" class="upg"></button>
                 <button id=cu15 onclick="buycu(15)" class="upg"></button><br>
+
                 <button id=cu21 onclick="buycu(21)" class="upg"></button>
                 <button id=cu22 onclick="buycu(22)" class="upg"></button>
                 <button id=cu23 onclick="buycu(23)" class="upg"></button>
                 <button id=cu24 onclick="buycu(24)" class="upg"></button>
                 <button id=cu25 onclick="buycu(25)" class="upg"></button><br>
+
+                <button id=cu31 onclick="buycu(31)" class="upg"></button>
+                <button id=cu32 onclick="buycu(32)" class="upg"></button>
+                <button id=cu33 onclick="buycu(33)" class="upg"></button>
+                <button id=cu34 onclick="buycu(34)" class="upg"></button>
+                <button id=cu35 onclick="buycu(35)" class="upg"></button><br>
             </tab>
+
             <tab id=cd>
                 <subItem id=ce></subItem><br /><br />
                 <button id=buyMaxcd onclick="buyMaxcd()" class="buymax">购买最大</button><br /><br />
                 <button id=cd0 onclick="buycd(0)" class="dim"></button><br /><br />
                 <button id=cd1 onclick="buycd(1)" class="dim"></button><br /><br />
                 <button id=cd2 onclick="buycd(2)" class="dim"></button><br /><br />
-                <button id=cd3 onclick="buycd(3)" class="dim"></button>
+                <button id=cd3 onclick="buycd(3)" class="dim"></button><br /><br />
+                <button id=cpBooster onclick="buyCpBooster()" class="dim"></button><br /><br />
             </tab>
+
             <tab id=rl3chall>
                 <help>进入塌缩挑战时同时也会触发所有该挑战左侧的挑战,元挑战除外.达到塌缩目标以完成挑战.</help><br>
                 <button id=exitRl3Chall onclick="exitRl3Chall()" class="dim">退出塌缩挑战</button><br />
+
                 <button id=c10 onclick="enterRl3Chall(10)" class="upg"></button>
                 <button id=c11 onclick="enterRl3Chall(11)" class="upg"></button>
                 <button id=c12 onclick="enterRl3Chall(12)" class="upg"></button>
                 <button id=c13 onclick="enterRl3Chall(13)" class="upg"></button>
                 <button id=c14 onclick="enterRl3Chall(14)" class="upg"></button><br>
+
                 <button id=c20 onclick="enterRl3Chall(20)" class="upg"></button>
                 <button id=c21 onclick="enterRl3Chall(21)" class="upg"></button>
                 <button id=c22 onclick="enterRl3Chall(22)" class="upg"></button>
                 <button id=c23 onclick="enterRl3Chall(23)" class="upg"></button>
                 <button id=c24 onclick="enterRl3Chall(24)" class="upg"></button><br>
             </tab>
+
         </app>
     </body>
 </html>

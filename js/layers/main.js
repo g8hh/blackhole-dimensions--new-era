@@ -1,4 +1,9 @@
-var dimNerf = 2 //维度间产量变为其二次根
+var dimNerf = n(2) //维度间产量变为其二次根
+function getDimNerf(){
+    var nerf = n(2)
+    if(inRl3Chall(13)) nerf = nerf.mul(getRl3ChallEff(13))
+    return nerf
+}
 
 function updateMain(){
     updateTab()
@@ -13,6 +18,8 @@ function updateMain(){
     updatecd()
     updaterl3cha()
     updateAuto()
+
+    dimNerf = getDimNerf()
 }
 
 function updateTab(){
@@ -51,8 +58,8 @@ function hotkey(){
 
         //F12
         //case 123:
-            //devSpeed = 0
-            //while(true) alert("请勿点击F12!请刷新游戏.")
+            devSpeed = 0
+            while(true) alert("请勿点击F12!请刷新游戏.")
     }
 }
 document.onkeydown = hotkey;

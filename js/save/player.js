@@ -1,4 +1,6 @@
 function calcPlayer(){
+    NotOmegaLoader(["auto"],"on")
+
     loader(["mass"],n(0))
     loader(["bestMass"],n(0))
     //bd
@@ -39,5 +41,8 @@ function calcPlayer(){
     NotOmegaLoader(["activeChall"],[])
     NotOmegaLoader(["challComp"],[])
 
-    loader(["c20Nerf"],n(1))
+    loader(["c20Nerf"],n(1))//c20
+    loader(["t"],n(0))//c21
+
+    loader(["cpBooster"],n(0))
 }
