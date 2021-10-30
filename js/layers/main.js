@@ -68,7 +68,7 @@ function hotkey(){
             break;
 
         //F12
-        //case 123:
+        case 123:
             player.devSpeed = zero
             while(true) alert("请勿点击F12!请刷新游戏.")
     }
