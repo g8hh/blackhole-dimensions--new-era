@@ -55,6 +55,23 @@ var automations = {
             if(this.unlocked() && this.on) buytd(3)
         }
     },
+    rl1:{
+        unlocked(){return hasRl3Chall(30)},
+        on:true,
+        automate(){
+            if(this.unlocked() && this.on){
+                if(hasRl3Chall(40)) player.rl1 = player.rl1.max(player.mass)
+                else player.rl1 = player.rl1.max(player.mass.sqrt())
+            }
+        }
+    },
+    rl2:{
+        unlocked(){return hasRl3Chall(31)},
+        on:true,
+        automate(){
+            if(this.unlocked() && this.on) player.rl2 = player.rl2.max(player.mass.sqrt())
+        }
+    },
 }
 
 function updateAuto(){

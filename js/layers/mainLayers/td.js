@@ -24,7 +24,8 @@ function getAlltdMult(){
     var mult = n(1)
     mult = mult.mul(getRl1Mult())
     if(hasRl3Upgrade(15)) mult = mult.mul(cuEff(15))
-    mult= mult.mul(getCEEff())
+    mult = mult.mul(getCEEff())
+    if(inRl3Chall(31)) mult = mult.div(getRl3ChallTotalEff(31))
     return mult
 }
 function getAnytdMult(dimNum){
@@ -40,9 +41,13 @@ function gettdLevelBoostBase(dimNum){
     var base = n(2)
     if(hasRl3Upgrade(13)) base = base.add(cuEff(13))
     if(hasRl3Upgrade(23)) base = base.add(cuEff(23))
+    if(hasRl3Upgrade(33)) base = base.add(cuEff(33))
+    if(hasRl3Upgrade(43)) base = base.add(cuEff(43))
     return base
 }
 function buytd(dimNum){
+    if(inRl3Chall(23)) if(dimNum == 3) return
+
     var bulkStat = bulkBuy(player.mass,TDcost[dimNum],player.td[dimNum].level,TDcostMult[dimNum])
     if(bulkStat.bulk.lt(1)) return
     player.td[dimNum].num = player.td[dimNum].num.add(bulkStat.bulk)
@@ -63,7 +68,10 @@ function updatetd(){
         player.td[i].procmult = player.td[i].procmult.add(player.td[i].num.mul(tdMult[i]).mul(diff).mul(getPreBCTickspeed()))
         proc = proc.mul(player.td[i].procmult)
     }
+    if(inRl3Chall(30)) proc = powsoftcap(proc,player.mass.pow(0.33),2)
+    proc = sc("ts",proc)
     player.ts = player.ts.add(proc.mul(diff).mul(getPreBCTickspeed()))
+    
 
     //显示部分!
     if(SecondTab!="时间维度") return close("td")

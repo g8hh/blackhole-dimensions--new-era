@@ -1,14 +1,22 @@
-function cuEff(id){
-    return cu[id].effect()
+function cuEff(id,input = null){
+    if(!input) return cu[id].effect()
+    return cu[id].effect(input)
 }
 function hasRl3Upgrade(id){
     return player.cu.includes(id)
+}
+function getCuCostPowerDiv(){
+    var mult = one
+    if(hasRl3Upgrade(35)) mult = mult.mul(cuEff(35).costInc)
+    if(hasRl3Upgrade(45)) mult = mult.mul(cuEff(45).costInc)
+    return mult
 }
 function getCuCostPower(row){
     var amount = one
     for(a=1;a<=5;a++){
         if(player.cu.includes(row*10+a)) amount = amount.add(1)
     }
+    amount = amount.sub(1).div(getCuCostPowerDiv()).add(1)
     return amount
 }
 function buycu(id){
@@ -39,7 +47,10 @@ var cu = {
     },
     15:{
         desp(){return `时间碎片加成时间维度.(x ${format(this.effect())})(Tip:配合rl1...)`},
-        effect(){return player.ts.add(1).pow(0.005)},
+        effect(){
+            if(hasRl3Upgrade(35)) return player.ts.add(1).pow(0.0075).pow(cuEff(35).cu25)
+            return player.ts.add(1).pow(0.0075)
+        },
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },
     21:{
@@ -77,23 +88,58 @@ var cu = {
     },
     32:{
         desp(){return `物质上限被时间碎片倍增.(x${format(this.effect())})(Tip:在cu12和cu22前生效...).`},
-        effect(){return player.ts.add(1).pow(0.2)},
+        effect(){
+            if(hasRl3Upgrade(42)) return player.ts.add(1).pow(0.2).pow(cuEff(42,"cu32"))
+            return player.ts.add(1).pow(0.2)
+        },
         cost(){return n(10).pow(getCuCostPower(3)).floor()}
     },
     33:{
         desp(){return `物质维度购买倍率的底数+${format(this.effect(),2,true)}(基于挑战完成数).`},
-        effect(){return n(0.015).mul(player.challComp.length**0.85)},
+        effect(){return n(0.010).mul(player.challComp.length**0.85)},
         cost(){return n(10).pow(getCuCostPower(3)).floor()}
     },
     34:{
         desp(){return `奇点维度效果指数+${format(this.effect(),2,true)}.(基于挑战完成数)`},
-        effect(){return n(0.02).mul(player.challComp.length**0.85)},       
+        effect(){return n(0.015).mul(player.challComp.length**0.85)},       
         cost(){return n(10).pow(getCuCostPower(3)).floor()}
     },
     35:{
-        desp(){return `基于挑战完成数,指数加成cu25效果(^${format(this.effect().cu25)}),并且减弱塌缩升级的价格增长(-^${format(this.effect().costInc)})`},
-        effect(){return {cu25:player.challComp.length**0.85*0.15+1,costInc:n(0.2)}},        
+        desp(){return `基于挑战完成数,指数加成cu25和cu15效果(^${format(this.effect().cu25)}),并且减弱塌缩升级的价格增长(指数/${format(this.effect().costInc)})`},
+        effect(){return {cu25:player.challComp.length**0.85*0.15+1,costInc:n(1.33)}},        
         cost(){return n(10).pow(getCuCostPower(3)).floor()}
+    },
+    41:{
+        desp(){return `基于挑战完成数,加成塌缩点倍增器的效果底数(+${format(this.effect(),2,true)}),塌缩点倍增器+3.`},
+        effect(){return n(0.01).mul(player.challComp.length**0.75)},        
+        cost(){return n(100).pow(getCuCostPower(4)).floor()}
+    },
+    42:{
+        desp(){return `物质上限加成bp获取.(x${format(this.effect("bp"))})同时,挑战完成数指数加成cu32的效果.(^${format(this.effect("cu32"))})`},
+        effect(type){
+            switch(type){
+                case "bp":
+                    return getMaxMass().root(getRl3Req().add(1e10).log10()).log10()
+                case "cu32":
+                    return player.challComp.length**0.75*0.125+1
+            }
+        },   
+        cost(){return n(100).pow(getCuCostPower(4)).floor()}
+    },
+    43:{
+        desp(){return `奇点能量加成物质维度购买倍率.(+${format(this.effect(),2,true)})`},
+        effect(){return expRoot(player.ce.add(10).log10().mul(10),1.25).pow(0.8).div(400)},        
+        cost(){return n(100).pow(getCuCostPower(4)).floor()}
+    },
+    44:{
+        desp(){return `奇点能量加成奇点指数.(+${format(this.effect(),2,true)})`},
+        effect(){return expRoot(player.ce.add(10).log10().mul(10),1.2).pow(0.8).div(400)},        
+        cost(){return n(100).pow(getCuCostPower(4)).floor()}
+    },
+    45:{
+        desp(){return `减弱塌缩升级的价格增长(指数/${format(this.effect().costInc)}),塌缩要求/${format(this.effect().bcReq)}.挑战内不对塌缩要求生效.`},
+        effect(){return {costInc:n(1.33),bcReq:n(1e50)}},        
+        cost(){return n(100).pow(getCuCostPower(4)).floor()}
     },
 }
 
@@ -121,12 +167,15 @@ function getMaxMass(){
 function getRl3Req(){
     var req = n(Number.MAX_VALUE)
     if(hasRl3Upgrade(11)) req = req.div(cuEff(11))
+    if(hasRl3Upgrade(45) && player.chall == null) req = req.div(cuEff(45).bcReq)
+    if(inRl3Chall(30)) req = req.pow(getRl3ChallEff(30))
     return req
 }
 function getCPGain(mass = player.mass){
-    var gain = mass.root(getRl3Req().add(10).log10()).div(5).floor()
+    var gain = mass.root(getRl3Req().add(10).log10()).div(5)
     gain = gain.mul(getCpBoosterEff())
-    return gain
+    if(hasRl3Upgrade(42)) gain = gain.mul(cuEff(42,"bp"))
+    return gain.floor()
 }
 
 function doRl3(force = false){
@@ -161,7 +210,7 @@ function doRl3(force = false){
 function updaterl3(){
     if(SecondTab==`塌缩升级`){
         open(`rl3upg`)
-        w(`cp`,`您有 ${format(player.cp,0)} 塌缩点 购买升级会加高同行升级的价格!(+^1)`)
+        w(`cp`,`您有 ${format(player.cp,0)} 塌缩点 购买升级会加高同行升级的价格!(+^${format(one.div(getCuCostPowerDiv()),2,true)})`)
         w(`rl3`,`重置以获得 ${format(getCPGain(),0)} 塌缩点 (需要 ${format(getRl3Req())} 质量以重置)<br>当前物质上限: ${format(getMaxMass())}`)
         for(i in cu){
             i = Number(i)

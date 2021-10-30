@@ -4,10 +4,12 @@ function getRl1MultExp(){
 }
 function getRl1Mult(mass = player.rl1){
     if(inRl3Chall(12)) mass = mass.root(getRl3ChallEff(12))
+    if(inRl3Chall(24)) mass = mass.pow(getRl2Exp())
     var mult = sc("rl1mult",mass.add(1).pow(getRl1MultExp()),mass == player.rl2)
     return mult
 }
 function getRl1Exp(mass = player.rl1){
+    if(inRl3Chall(24)) mass = mass.pow(getRl2Exp())
     var exp = sc("rl1exp",mass.add(1).log10().div(2).add(10).log10().pow(0.33),mass == player.rl2)
     return exp
 }

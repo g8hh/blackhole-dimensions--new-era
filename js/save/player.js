@@ -1,6 +1,7 @@
 function calcPlayer(){
     NotOmegaLoader(["auto"],"on")
 
+    loader(["devSpeed"],n(1))
     loader(["mass"],n(0))
     loader(["bestMass"],n(0))
     //bd

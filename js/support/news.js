@@ -27,7 +27,7 @@ newsArray = [
     ["你这黑洞多少粒子一个啊？1.79e308，现在哪有黑洞买的啊？你要不要吧 - 辉影神秘",toggle(14)],
     ["吃个黑洞，嗯，好。。。。好家伙你别吃了 - 辉影神秘",toggle(14)],
     ["反物质维度用不同语言翻译114514遍会是什么样的？ - CaoJinMing",toggle(3)],
-    [`在今天，只有在今天你才可以拨打电话15757610937去获得1~600物质。只有在今天你可以达到无限，超越无限。[截止日期: ${t.getDate()}号] - 曦`,toggle(3)],
+    [`在今天，只有在今天你才可以拨打电话15757610937去获得1~600物质。只有在今天你可以达到无限，超越无限。[截止日期: ${t.getDate()}号00:00] - 曦`,toggle(3)],
     ["《时间简史》里说过，世界上任何物质都有一个与其相反的物质，有你就有反你，你和反你相接触就会产生爆炸，消失在该平行宇宙，黑洞也不例外。与之相反的是白洞 产生爆炸的能量相当于1^80亿万吨TNT爆炸的能量 - 陌尘",toggle(14)],
     ["黑洞上撒点反物质……嗯～美味 - 鸭子",toggle(12)],
     ["如果一个黑洞丢出了一个袋鼠 那么几个袋鼠可以丢出一个黑洞呢 - 曦",toggle(13)],
@@ -44,11 +44,15 @@ newsArray = [
     ["我在人群中看见了拉普拉斯，史瓦西，惠勒和霍金 - 神之海",toggle(6)],
     ["You Need Do ↑↑↓↓←→←→BABA,Then You\'ll Be Able To Reach The Endgame - 陌尘",toggle(14)],
     ["“世俗总要男人无惧无畏~”当然面对QwQ的黑洞质量还是要怂一怂的 - 陌尘",toggle(14)],
+    ["放置游戏就要有滚动新闻！滚动游戏就要有放置新闻！ - ajchen",toggle(14)],
+    [`一共有${Math.floor(newsNum)}个滚动新闻，你收集全了么？ - ajchen`,toggle(14)],
+    [`这算放置游戏还是增量游戏？ - ajchen`,toggle(14)],
 ];} 
 var s;
 var scrollTimeouts = []; 
 var nextMsgIndex;
 var newsLength;
+var newsNum;
 function doodooWater() {
   s = document.getElementById("news");
   scrollNextMessage();
@@ -56,6 +60,7 @@ function doodooWater() {
 
 function scrollNextMessage() {
   updateNewsArray();
+  newsNum = newsArray.length
   //select a message at random
 
   try {

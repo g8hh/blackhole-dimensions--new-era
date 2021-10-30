@@ -5,12 +5,13 @@ function getPreBCTickspeed(){
     var tickspeed = n(1)
     if(inRl3Chall(20)) tickspeed = tickspeed.div(player.c20Nerf.max(1e-10))
     if(inRl3Chall(21)) tickspeed = tickspeed.div(getRl3ChallTotalEff(21))
+    if(inRl3Chall(22)) tickspeed = tickspeed.div(getRl3ChallTotalEff(22))
     return tickspeed
 }
 
 function getMinMass(){
     var min = n(0)
-    if(hasRl3Upgrade(25)) min = cuEff(25).minMass
+    if(hasRl3Upgrade(25) || inRl3Chall(31)) min = cuEff(25).minMass
     return min
 }
 
@@ -48,6 +49,8 @@ function getbdLevelBoostBase(dimNum){
     var base = n(2)
     if(hasRl3Upgrade(13)) base = base.add(cuEff(13))
     if(hasRl3Upgrade(23)) base = base.add(cuEff(23))
+    if(hasRl3Upgrade(33)) base = base.add(cuEff(33))
+    if(hasRl3Upgrade(43)) base = base.add(cuEff(43))
     return base
 }
 function buybd(dimNum){
@@ -73,7 +76,7 @@ function updatebd(){
     }
 
     //rl2!
-    proc = proc.pow(getRl2Exp())
+    if(!inRl3Chall(24)) proc = proc.pow(getRl2Exp())
     //sc
     proc = sc("mass",proc)
 

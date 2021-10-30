@@ -10,7 +10,7 @@ function load(save = null){
     calcPlayer();
     //window.alert("test")
     fixSave()
-    player.version = 0.25
+    player.version = 0.26
 };
 function save(){
     if(toClearSave){

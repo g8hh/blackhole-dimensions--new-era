@@ -13,17 +13,17 @@ var softcaps = {
                 return pow
             },
         },
-        /*mass:{
+        mass:{
             name:"黑洞质量",
             start(){
-                var start = n("1e414")
+                var start = n("1e800")
                 return start
             },
             pow(){
-                var pow = n(1.075)
+                var pow = n(2)
                 return pow
             },
-        },*/
+        },
         bd:{
             name:"黑洞维度等级",
             start(){
@@ -57,6 +57,17 @@ var softcaps = {
                 return pow
             },
         },
+        ts:{
+            name:"时间碎片",
+            start(){
+                var start = n("1e616")
+                return start
+            },
+            pow(){
+                var pow = n(1.25)
+                return pow
+            },
+        },
     },
     sc1:{
         //sc1: n -> n/pow
@@ -86,10 +97,12 @@ var softcaps = {
             name:"时间维度等级",
             start(){
                 var start = n(308)
+                if(inRl3Chall(24)) start = n(1)
                 return start
             },
             pow(){
                 var pow = n(2)
+                if(inRl3Chall(24)) pow = pow.mul(getRl3ChallEff(24).add(1))
                 return pow
             },
         },
@@ -137,22 +150,23 @@ function sc(name,num,show = true){
             var scIndex = softcaps[scType][name]
             var scStart = scIndex.start()
             var scPow = scIndex.pow()
-            if(num.lte(scStart)) return num
-            switch(scType){
-                case "sc1":
-                    num = num.sub(scStart).div(scPow).add(scStart)
-                    break;
-                case "sc2":
-                    num = powsoftcap(num,scStart,scPow)
-                    break;
-                case "sc3":
-                    num = expRootSoftcap(num,scStart,scPow)
-                    break;
-                case "sc4":
-                    num = logsoftcap(num,scStart,scPow)
-                    break;
+            if(num.gt(scStart)){
+                switch(scType){
+                    case "sc1":
+                        num = num.sub(scStart).div(scPow).add(scStart)
+                        break;
+                    case "sc2":
+                        num = powsoftcap(num,scStart,scPow)
+                        break;
+                    case "sc3":
+                        num = expRootSoftcap(num,scStart,scPow)
+                        break;
+                    case "sc4":
+                        num = logsoftcap(num,scStart,scPow)
+                        break;
+                }
+                if(show) softcapStr[scType][name] = {name:scIndex.name,start:scStart,pow:scPow}
             }
-            if(show) softcapStr[scType][name] = {name:scIndex.name,start:scStart,pow:scPow}
         }
     }
     return num
