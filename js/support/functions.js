@@ -113,7 +113,8 @@ function expRoot(num,root){
 
 function expRootSoftcap(num,start,power){
     if(num.lte(start)) return num;
-    return ten.pow(num.log10().sub(start.log10()).root(power)).pow(start.log10().pow(one.sub(one.div(power))))
+    num = num.log10();start = start.log10()
+    return ten.pow(num.root(power).mul(start.pow(one.sub(one.div(power)))))
 }
 
 function normal(id,extraClass = []){

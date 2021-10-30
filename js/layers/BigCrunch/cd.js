@@ -11,6 +11,7 @@ function getCEEffExp(){
     if(hasRl3Upgrade(24)) exp = exp.add(cuEff(24))
     if(hasRl3Upgrade(34)) exp = exp.add(cuEff(34))
     if(hasRl3Upgrade(44)) exp = exp.add(cuEff(44))
+    if(hasRl3Upgrade(54)) exp = exp.add(cuEff(54))
     if(!hasRl3Upgrade(14)) exp = n(0)
     return exp
 }
@@ -26,8 +27,8 @@ function getAllcdMult(){
 }
 function getAnycdMult(dimNum){
     var mult = cdMult.all
-    var level = player.cd[dimNum].level
-    mult = mult.mul(getcdLevelBoostBase().pow(level))
+    var level = sc("cd",player.cd[dimNum].level)
+    mult = mult.mul(getcdLevelBoostBase(dimNum).pow(level))
     if(dimNum != 0) mult = mult.div(10)  
 
     if(inRl3Chall(11)) mult = mult.div(getRl3ChallEff(11).pow(dimNum))
@@ -35,12 +36,16 @@ function getAnycdMult(dimNum){
     return mult
 }
 function getcdLevelBoostBase(dimNum){
+    dimNum = Number(dimNum)
     var base = n(2)
     if(hasRl3Chall(14)){
         if(hasRl3Upgrade(13)) base = base.add(cuEff(13))
         if(hasRl3Upgrade(23)) base = base.add(cuEff(23))
         if(hasRl3Upgrade(33)) base = base.add(cuEff(33))
         if(hasRl3Upgrade(43)) base = base.add(cuEff(43))
+    }
+    if(hasRl3Upgrade(53)){
+        if(hasRl3Upgrade(33)) base = base.add(cuEff(33).mul(dimNum+1))
     }
     return base
 }
@@ -66,15 +71,16 @@ function buyCpBooster(){
     player.cpBooster = player.cpBooster.add(bulkStat.bulk)
     player.cp = player.cp.sub(bulkStat.cost)
 }
-function getCuBoosterEffExp(){
+function getCuBoosterEffBase(){
     var effBase = n(1.2)
     if(hasRl3Upgrade(41)) effBase = effBase.add(cuEff(41))
+    if(hasRl3Chall(32)) effBase = effBase.add(0.05)
     return effBase
 }
 function getCpBoosterEff(){
     if(!hasRl3Upgrade(31)) return one
-    var effBase = getCuBoosterEffExp()
-    var effNum = player.cpBooster
+    var effBase = getCuBoosterEffBase()
+    var effNum = sc("cpBooster",player.cpBooster)
     if(hasRl3Upgrade(41)) effNum = effNum.add(3)
     var eff = effBase.pow(effNum)
     return eff
@@ -92,6 +98,7 @@ function updatecd(){
         player.cd[i].procmult = player.cd[i].procmult.add(player.cd[i].num.mul(cdMult[i]).mul(diff).mul(getPreBCTickspeed()))
         proc = proc.mul(player.cd[i].procmult)
     }
+    proc = sc("ce",proc)
     player.ce = player.ce.add(proc.mul(diff).mul(getPreBCTickspeed()))
 
     //显示部分!
@@ -105,7 +112,7 @@ function updatecd(){
     }
     var cost = getCpBoosterCostAndCostInc().cost
     var costInc = getCpBoosterCostAndCostInc().costInc
-    w("cpBooster",`您有${format(player.cpBooster)}个塌缩点倍增器,使得塌缩点x${format(getCpBoosterEff())}(效果底数:${format(getCuBoosterEffExp(),3)}). 购买${format(showBulkBuy(player.cp,cost,player.cpBooster,costInc).bulk)}个 总价格:${format(showBulkBuy(player.cp,cost,player.cpBooster,costInc).cost)}${hasRl3Upgrade(31)?"":" 您必须拥有cu31才能购买/起效!"}`)
+    w("cpBooster",`您有${format(sc("cpBooster",player.cpBooster))}个塌缩点倍增器,使得塌缩点x${format(getCpBoosterEff())}(效果底数:${format(getCuBoosterEffBase(),3)}). 购买${format(showBulkBuy(player.cp,cost,player.cpBooster,costInc).bulk)}个 总价格:${format(showBulkBuy(player.cp,cost,player.cpBooster,costInc).cost)}${hasRl3Upgrade(31)?"":" 您必须拥有cu31才能购买/起效!"}`)
     if(!hasRl3Upgrade(31)) red("cpBooster",["dim"])
     else if(bulkBuy(player.cp,cost,player.cpBooster,costInc).bulk.gte(1)) grey("cpBooster",["dim"])
     else normal("cpBooster",["dim"])

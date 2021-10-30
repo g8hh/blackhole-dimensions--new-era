@@ -1,6 +1,6 @@
 function getRl2Exp(mass = player.rl2){
     var exp = sc("rl2",mass.div(1e50).add(1).log10().div(800).add(1).log10().add(1),mass == player.rl2)
-    if(inRl3Chall(24)) exp = exp.pow(getRl3ChallEff(24).rec())
+    if(inRl3Chall(24)) exp = exp.pow(n(2**0.5).root(getRl3ChallEff(24)))
     return exp
 }
 function doRl2(){

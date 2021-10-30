@@ -1,4 +1,53 @@
 var softcaps = {
+    sc3:{
+        //sc3: 10^n -> 10^(n^(1/pow)) 
+        //maxMass:{
+        //    name:"黑洞质量上限",
+        //    start(){
+        //        var start = n("1e1000")
+        //        return start
+        //    },
+        //    pow(){
+        //        var pow = n(1.25)
+        //        return pow
+        //    },
+        //},
+        mass:{
+            name:"黑洞质量",
+            start(){
+                var start = getMaxMass().add(1).mul(10)
+                if(inRl3Chall(33)) start = ten
+                return start
+            },
+            pow(){
+                var pow = n(1.1)
+                if(inRl3Chall(33)) pow = pow.pow(getRl3ChallEff(33))
+                return pow
+            },
+        },
+        ts:{
+            name:"时间碎片",
+            start(){
+                var start = n("1e2000")
+                return start
+            },
+            pow(){
+                var pow = n(1.5)
+                return pow
+            },
+        },
+        ce:{
+            name:"奇点能量",
+            start(){
+                var start = n(1e308)
+                return start
+            },
+            pow(){
+                var pow = n(2)
+                return pow
+            },
+        },
+    },
     sc2:{
         //sc2: n -> n^(1/pow)
         rl1mult:{
@@ -21,6 +70,7 @@ var softcaps = {
             },
             pow(){
                 var pow = n(2)
+                if(hasRl3Upgrade(52)) pow = pow.sqrt()
                 return pow
             },
         },
@@ -28,10 +78,12 @@ var softcaps = {
             name:"黑洞维度等级",
             start(){
                 var start = n(200)
+                if(inRl3Chall(32)) start = n(1)
                 return start
             },
             pow(){
                 var pow = n(1.1)
+                if(inRl3Chall(32)) pow = pow.pow(getRl3ChallEff(32))
                 return pow
             },
         },
@@ -39,10 +91,12 @@ var softcaps = {
             name:"时间维度等级",
             start(){
                 var start = n(400)
+                if(inRl3Chall(32)) start = n(1)
                 return start
             },
             pow(){
                 var pow = n(1.1)
+                if(inRl3Chall(32)) pow = pow.pow(getRl3ChallEff(32))
                 return pow
             },
         },
@@ -65,6 +119,50 @@ var softcaps = {
             },
             pow(){
                 var pow = n(1.25)
+                return pow
+            },
+        },
+        cpBooster:{
+            name:"塌缩点倍增器",
+            start(){
+                var start = n(50)
+                return start
+            },
+            pow(){
+                var pow = n(1.25)
+                return pow
+            },
+        },
+        cd:{
+            name:"奇点维度等级",
+            start(){
+                var start = n(50)
+                return start
+            },
+            pow(){
+                var pow = n(1.25)
+                return pow
+            },
+        },
+        ce:{
+            name:"奇点能量",
+            start(){
+                var start = n(1e100)
+                return start
+            },
+            pow(){
+                var pow = n(1.25)
+                return pow
+            },
+        },
+        cp:{
+            name:"塌缩点",
+            start(){
+                var start = n(1e100)
+                return start
+            },
+            pow(){
+                var pow = n(2)
                 return pow
             },
         },
@@ -125,6 +223,7 @@ var softcaps = {
             },
             pow(){
                 var pow = n(2.5)
+                if(hasRl3Chall(34)) pow = n(2)
                 return pow
             },
         },

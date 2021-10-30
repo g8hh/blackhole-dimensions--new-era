@@ -1,10 +1,12 @@
 function getRl1MultExp(){
     var exp = n(0.01)
+    if(hasRl3Upgrade(54)) exp = exp.mul(1.5)
     return exp
 }
 function getRl1Mult(mass = player.rl1){
     if(inRl3Chall(12)) mass = mass.root(getRl3ChallEff(12))
     if(inRl3Chall(24)) mass = mass.pow(getRl2Exp())
+    if(hasRl3Upgrade(54)) mass = mass.pow(getRl2Exp().pow(2))
     var mult = sc("rl1mult",mass.add(1).pow(getRl1MultExp()),mass == player.rl2)
     return mult
 }

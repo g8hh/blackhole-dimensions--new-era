@@ -10,6 +10,7 @@ function getTSEffExp(){
     exp = exp.mul(getRl1Exp())
 
     if(inRl3Chall(10)) exp = exp.div(getRl3ChallEff(10))
+    if(inRl3Chall(34)) exp = exp.div(getRl3ChallEff(34))
 
     return exp
 }
@@ -24,6 +25,7 @@ function getAlltdMult(){
     var mult = n(1)
     mult = mult.mul(getRl1Mult())
     if(hasRl3Upgrade(15)) mult = mult.mul(cuEff(15))
+    if(hasRl3Upgrade(51)) mult = mult.mul(cuEff(51))
     mult = mult.mul(getCEEff())
     if(inRl3Chall(31)) mult = mult.div(getRl3ChallTotalEff(31))
     return mult
@@ -31,7 +33,7 @@ function getAlltdMult(){
 function getAnytdMult(dimNum){
     var mult = tdMult.all
     var level = sc("td",player.td[dimNum].level)
-    mult = mult.mul(gettdLevelBoostBase().pow(level))    
+    mult = mult.mul(gettdLevelBoostBase(dimNum).pow(level))    
 
     if(inRl3Chall(11)) mult = mult.div(getRl3ChallEff(11).pow(dimNum))
 

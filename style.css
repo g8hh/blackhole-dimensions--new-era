@@ -56,3 +56,10 @@
     white-space: nowrap;
     font-weight: bold
 }
+.META{
+    height: 100px;
+    width: 1850px;
+    font-size: 100%;
+    text-align: center;
+    float: left;
+}

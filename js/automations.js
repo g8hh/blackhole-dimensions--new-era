@@ -69,7 +69,10 @@ var automations = {
         unlocked(){return hasRl3Chall(31)},
         on:true,
         automate(){
-            if(this.unlocked() && this.on) player.rl2 = player.rl2.max(player.mass.sqrt())
+            if(this.unlocked() && this.on){
+                if(hasRl3Chall(41)) player.rl2 = player.rl2.max(player.mass)
+                else player.rl2 = player.rl2.max(player.mass.sqrt())
+            }
         }
     },
 }

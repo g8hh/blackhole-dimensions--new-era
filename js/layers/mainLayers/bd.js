@@ -6,6 +6,7 @@ function getPreBCTickspeed(){
     if(inRl3Chall(20)) tickspeed = tickspeed.div(player.c20Nerf.max(1e-10))
     if(inRl3Chall(21)) tickspeed = tickspeed.div(getRl3ChallTotalEff(21))
     if(inRl3Chall(22)) tickspeed = tickspeed.div(getRl3ChallTotalEff(22))
+    if(hasRl3Upgrade(55)) tickspeed = tickspeed.mul(cuEff(55))
     return tickspeed
 }
 
@@ -30,7 +31,7 @@ function getAnybdMult(dimNum,special = null){
         dimNum = Number(dimNum)
         var mult = n(1)
         var level = sc("bd",player.bd[dimNum].level)
-        mult = mult.mul(getbdLevelBoostBase().pow(level))
+        mult = mult.mul(getbdLevelBoostBase(dimNum).pow(level))
         mult = mult.mul(getTSEff(dimNum))
         return mult
     }
@@ -80,7 +81,8 @@ function updatebd(){
     //sc
     proc = sc("mass",proc)
 
-    player.mass = player.mass.add(proc.mul(diff).mul(getPreBCTickspeed())).max(getMinMass()).min(getMaxMass())
+    player.mass = player.mass.add(proc.mul(diff).mul(getPreBCTickspeed())).max(getMinMass())
+    if(!hasRl3Upgrade(52)||player.chall!=null) player.mass = player.mass.min(getMaxMass())
     player.bestMass = player.bestMass.max(player.mass)
 
     //显示部分!

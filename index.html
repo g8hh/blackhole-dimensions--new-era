@@ -38,12 +38,13 @@
             <p id="news" style="transform: translateX(-2512px); transition: transform 35.33s linear 0s;"></p>
             <autoStat id = "autoStat"></autoStat>
             <h2 id=mass class="mass">黑洞质量 :  <mass id=massNum class="massNum"></mass> <mass id=massProc class="massProc"></mass></h2>
-            <p>v0.26 - 塌缩内容拓展^2 当前endgame:约1e800质量+全挑战+全升级</p><devSpeed id = "devSpeed"></devSpeed>
+            <p>v0.27 - 塌缩终焉 当前endgame:约1e17500质量+全挑战+全升级</p><devSpeed id = "devSpeed"></devSpeed>
             <br />
             <!--一层菜单-->
             <button onclick="FirstTab = '设置';SecondTab = '设置'" class="tab" id=tab_settings>设置</button>
             <button onclick="FirstTab = '物质维度';SecondTab = '黑洞维度'" class="tab" id=tab_md>物质维度</button>
             <button onclick="if(player.bestMass.lt(Number.MAX_VALUE)) return;FirstTab = '塌缩';SecondTab = '塌缩升级'" class="tab" id=tab_rl3>塌缩</button>
+            <button onclick="if(!hasRl3Chall(51)) return;alert('恭喜v0.27通关!镜面正在绝赞咕咕中（？')" class="tab" id=tab_rl4>镜面</button>
             <br /><br />
             <!--二层菜单-->
             <!--设置-->
@@ -52,7 +53,7 @@
                 <button onclick="prompt('您的存档:',saveStr)" id="export" class="tab">导出</button>
                 <button onclick="load(prompt('输入存档:'))" id="import" class="tab">导入</button>
                 <button onclick="player.auto = 'on'" id="onAuto" class="tab">启用自动化</button>
-                <button onclick="player.auto = 'off'" id="offAutp" class="tab">禁用自动化</button><br>
+                <button onclick="player.auto = 'off'" id="offAuto" class="tab">禁用自动化</button><br>
                 <scIndex id = "scIndex"></scIndex>
             </subtab>
             <!--物质维度-->
@@ -115,6 +116,12 @@
                 <button id=cu43 onclick="buycu(43)" class="upg"></button>
                 <button id=cu44 onclick="buycu(44)" class="upg"></button>
                 <button id=cu45 onclick="buycu(45)" class="upg"></button><br>
+
+                <button id=cu51 onclick="buycu(51)" class="upg"></button>
+                <button id=cu52 onclick="buycu(52)" class="upg"></button>
+                <button id=cu53 onclick="buycu(53)" class="upg"></button>
+                <button id=cu54 onclick="buycu(54)" class="upg"></button>
+                <button id=cu55 onclick="buycu(55)" class="upg"></button><br>
             </tab>
 
             <tab id=cd>
@@ -150,7 +157,12 @@
                 <button id=c34 onclick="enterRl3Chall(34)" class="upg"></button><br>
 
                 <button id=c40 onclick="enterRl3Chall(40)" class="upg"></button>
+                <button id=c41 onclick="enterRl3Chall(41)" class="upg"></button>
+                <button id=c42 onclick="enterRl3Chall(42)" class="upg"></button>
+                <button id=c43 onclick="enterRl3Chall(43)" class="upg"></button>
+                <button id=c44 onclick="enterRl3Chall(44)" class="upg"></button><br>
 
+                <button id=c51 onclick="enterRl3Chall(51)" class="META"></button>
             </tab>
 
         </app>

@@ -37,7 +37,7 @@ function egg(n) {
 function format(decimal, precision = 2, small=false) {
     decimal = new OmegaNum(decimal)
     let fmt = decimal.toString()
-    if(decimal.isNaN()) throw("您的存档里有NaN!请立即刷新游戏,如果无法解决请告诉作者.")
+    if(decimal.isNaN()) while(true) alert("您的存档里有NaN!请立即刷新游戏,如果无法解决请告诉作者.")
     if(decimal.lt(0)){return "-"+format(decimal.mul(-1), precision)}
     if(decimal.eq(0))return "0"
     if(decimal.lt("0.0001")){return format(decimal.rec(), precision) + "⁻¹"}

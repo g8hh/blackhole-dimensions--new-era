@@ -9,6 +9,7 @@ function getCuCostPowerDiv(){
     var mult = one
     if(hasRl3Upgrade(35)) mult = mult.mul(cuEff(35).costInc)
     if(hasRl3Upgrade(45)) mult = mult.mul(cuEff(45).costInc)
+    if(hasRl3Chall(33)) mult = mult.mul(1.3)
     return mult
 }
 function getCuCostPower(row){
@@ -89,8 +90,8 @@ var cu = {
     32:{
         desp(){return `物质上限被时间碎片倍增.(x${format(this.effect())})(Tip:在cu12和cu22前生效...).`},
         effect(){
-            if(hasRl3Upgrade(42)) return player.ts.add(1).pow(0.2).pow(cuEff(42,"cu32"))
-            return player.ts.add(1).pow(0.2)
+            if(hasRl3Upgrade(42)) return expRootSoftcap(player.ts.add(1).pow(0.2).pow(cuEff(42,"cu32")),n("1e450"),n(1.25))
+            return expRootSoftcap(player.ts.add(1).pow(0.2),n("1e450"),n(1.25))
         },
         cost(){return n(10).pow(getCuCostPower(3)).floor()}
     },
@@ -128,18 +129,51 @@ var cu = {
     },
     43:{
         desp(){return `奇点能量加成物质维度购买倍率.(+${format(this.effect(),2,true)})`},
-        effect(){return expRoot(player.ce.add(10).log10().mul(10),1.25).pow(0.8).div(400)},        
+        effect(){
+            if(hasRl3Upgrade(53)) return expRoot(player.ce.add(10).log10().mul(10),1.25).pow(0.8).div(400).add(1).pow(cuEff(53)).sub(1)
+            return expRoot(player.ce.add(10).log10().mul(10),1.25).pow(0.8).div(400)
+        },        
         cost(){return n(100).pow(getCuCostPower(4)).floor()}
     },
     44:{
         desp(){return `奇点能量加成奇点指数.(+${format(this.effect(),2,true)})`},
-        effect(){return expRoot(player.ce.add(10).log10().mul(10),1.2).pow(0.8).div(400)},        
+        effect(){
+            return expRoot(player.ce.add(10).log10().mul(10),1.2).pow(0.8).div(400)
+        },        
         cost(){return n(100).pow(getCuCostPower(4)).floor()}
     },
     45:{
         desp(){return `减弱塌缩升级的价格增长(指数/${format(this.effect().costInc)}),塌缩要求/${format(this.effect().bcReq)}.挑战内不对塌缩要求生效.`},
-        effect(){return {costInc:n(1.33),bcReq:n(1e50)}},        
+        effect(){
+            if(hasRl3Upgrade(51)) return {costInc:n(1.53383),bcReq:n(1e75)}
+            return {costInc:n(1.33),bcReq:n(1e50)}
+        },        
         cost(){return n(100).pow(getCuCostPower(4)).floor()}
+    },
+    51:{
+        desp(){return `塌缩点和物质共同加成时间维度(x${format(this.effect())}).cu45效果^1.5.`},
+        effect(){return player.mass.add(10).log10().tetr(1.33).pow(player.cp.add(10).log10().div(3).sqrt())},        
+        cost(){return n(1e7).pow(getCuCostPower(5)).floor()}
+    },
+    52:{
+        desp(){return `打破质量上限(Tip:挑战内不触发,并且超过上限时会受到sc3...猜猜sc3有多离谱?).黑洞质量软上限效果变为原来的50%.`},
+        effect(){return true},        
+        cost(){return n(1e7).pow(getCuCostPower(5)).floor()}
+    },
+    53:{
+        desp(){return `奇点维度购买倍率基于其序数受到cu33的加成.(+cu33*(n+1)).cu43的效果->(x+1)^${this.effect()}-1(=${format(expRoot(player.ce.add(10).log10().mul(10),1.25).pow(0.8).div(400).add(1).pow(cuEff(53)).sub(1),2,true)}).`},
+        effect(){return n(2)},        
+        cost(){return n(1e7).pow(getCuCostPower(5)).floor()}
+    },
+    54:{
+        desp(){return `空间扭曲增幅时间扭曲的物质计数(^${format(getRl2Exp().pow(2),2,true)})和奇点指数(+${format(this.effect(),2,true)}).时间扭曲的倍率^1.5.`},
+        effect(){return getRl2Exp().pow(1.2).sub(1)},        
+        cost(){return n(1e7).pow(getCuCostPower(5)).floor()}
+    },
+    55:{
+        desp(){return `时间碎片增幅塌缩前时间速率.(*${format(this.effect())})(Tip:这玩意也影响奇点维度)`},
+        effect(){return player.ts.add(10).mul(1e256).log10().div(256).pow(3.14)},        
+        cost(){return n(1e7).pow(getCuCostPower(5)).floor()}
     },
 }
 
@@ -161,6 +195,7 @@ function getMaxMass(){
     if(hasRl3Upgrade(12)) lim = lim.pow(cuEff(12))
     if(hasRl3Upgrade(22)) lim = lim.pow(cuEff(22))
     if(inRl3Chall(14)) lim = lim.root(1.5)
+    //lim = sc("maxMass",lim)
     return lim
 }
 
@@ -169,13 +204,14 @@ function getRl3Req(){
     if(hasRl3Upgrade(11)) req = req.div(cuEff(11))
     if(hasRl3Upgrade(45) && player.chall == null) req = req.div(cuEff(45).bcReq)
     if(inRl3Chall(30)) req = req.pow(getRl3ChallEff(30))
+    if(inRl3Chall(34)) req = req.pow(getRl3ChallEff(34))
     return req
 }
 function getCPGain(mass = player.mass){
     var gain = mass.root(getRl3Req().add(10).log10()).div(5)
     gain = gain.mul(getCpBoosterEff())
     if(hasRl3Upgrade(42)) gain = gain.mul(cuEff(42,"bp"))
-    return gain.floor()
+    return sc("cp",gain).floor()
 }
 
 function doRl3(force = false){

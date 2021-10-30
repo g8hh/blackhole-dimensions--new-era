@@ -2,22 +2,27 @@ var dimNerf = n(2) //维度间产量变为其二次根
 function getDimNerf(){
     var nerf = n(2)
     if(inRl3Chall(13)) nerf = nerf.mul(getRl3ChallEff(13))
+    if(inRl3Chall(34)) nerf = nerf.mul(getRl3ChallEff(34))
     return nerf
 }
 
 function updateMain(){
+    player.t = player.t.add(diff)
     updateTab()
-    updatesc()
+    updatesc()  
+
+    updaterl3cha()
 
     updatetd()
     updatebd()
+
+    updateAuto()
+
     updaterl1()
     updaterl2()
 
     updaterl3()
     updatecd()
-    updaterl3cha()
-    updateAuto()
 
     dimNerf = getDimNerf()
     w("devSpeed",player.devSpeed.eq(1)?"":"调试速度:"+format(player.devSpeed)+"x")
@@ -44,6 +49,11 @@ function updateTab(){
     }else{
         close("subtab_rl3")
     }
+    if(hasRl3Chall(51)){
+        normal("tab_rl4",["tab"])
+    }else{
+        red("tab_rl4",["tab"])
+    }
 }
 
 function hotkey(){  
@@ -58,7 +68,7 @@ function hotkey(){
             break;
 
         //F12
-        case 123:
+        //case 123:
             player.devSpeed = zero
             while(true) alert("请勿点击F12!请刷新游戏.")
     }
