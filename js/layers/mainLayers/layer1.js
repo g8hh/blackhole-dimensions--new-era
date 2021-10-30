@@ -17,7 +17,7 @@ function getRl1Exp(mass = player.rl1){
 }
 function doRl1(){
     if(player.mass.lt(1e30) || player.rl1.gte(player.mass)) if(!confirm("您将在条件不满足的情况下进行时间扭曲!这不会给您任何增益!是否重置?")) return
-    player.rl1 = player.mass.max(player.rl1)
+    if(player.mass.gte(1e30)) player.rl1 = player.mass.max(player.rl1)
 
     //reset
     player.mass = zero

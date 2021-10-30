@@ -5,7 +5,7 @@ function getRl2Exp(mass = player.rl2){
 }
 function doRl2(){
     if(player.mass.lt(1e150) || player.rl2.gte(player.mass)) if(!confirm("您将在条件不满足的情况下进行空间扭曲!这不会给您任何增益!是否重置?")) return
-    player.rl2 = player.mass.max(player.rl2)
+    if(player.mass.gte(1e150)) player.rl2 = player.mass.max(player.rl2)
 
     //reset
     player.mass = zero
