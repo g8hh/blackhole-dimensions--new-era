@@ -1,0 +1,16 @@
+var FirstTab = "物质维度"
+var SecondTab = "黑洞维度"
+var basicThingsInDims = ["num","procmult","level"]
+var basicDimNums = [3,2,1,0]
+var chsNum = ["零","一","二","三","四","五","六","七","八","九","十"]
+var zero = new OmegaNum(0)
+var one = new OmegaNum(1)
+var two = new OmegaNum(2)
+var three = new OmegaNum(3)
+var four = new OmegaNum(4)
+var five = new OmegaNum(5)
+var six = new OmegaNum(6)
+var seven = new OmegaNum(7)
+var eight = new OmegaNum(8)
+var nine = new OmegaNum(9)
+var ten = new OmegaNum(10)
