@@ -1,0 +1,65 @@
+*{
+    text-align: center;
+    background-color: black;
+    color: white;
+    user-select: none;
+}
+.mass{
+    font-size: 175%;
+}
+.massNum{
+    font-size: 150%;
+    color: #C1FFE4;
+}
+.tab{
+    height: 50px;    
+    width: 150px;
+    font-size: 100%;
+}
+.dim{
+    height: 50px;
+    width: 1200px;
+    font-size: 105%;
+}
+.buymax{
+    height: 50px;
+    width: 150px;
+    font-size: 105%;
+}
+.red{
+    color: black;
+    background-color: red;
+}
+.redText{
+    color: red;
+}
+.lime{
+    color: black;
+    background-color: lime;
+}
+.grey{
+    color: white;
+    background-color: rgb(25, 25, 25);
+}
+.upg{
+    height: 125px;
+    width: 370px;
+    font-size: 100%;
+    text-align: center;
+    float: left;
+}
+#news {
+    color: #FFFFFF;
+    /*display: inline-block;*/
+    text-align: right;
+    font-size: 15px;
+    white-space: nowrap;
+    font-weight: bold
+}
+.META{
+    height: 100px;
+    width: 1850px;
+    font-size: 100%;
+    text-align: center;
+    float: left;
+}
