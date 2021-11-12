@@ -41,6 +41,9 @@
     color: white;
     background-color: rgb(25, 25, 25);
 }
+.tip{
+    color:rgb(50, 50, 75);
+}
 .upg{
     height: 125px;
     width: 370px;

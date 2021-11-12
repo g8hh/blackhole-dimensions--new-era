@@ -47,6 +47,9 @@ newsArray = [
     ["放置游戏就要有滚动新闻！滚动游戏就要有放置新闻！ - ajchen",toggle(14)],
     [`一共有${Math.floor(newsNum)}个滚动新闻，你收集全了么？ - ajchen`,toggle(14)],
     [`这算放置游戏还是增量游戏？ - ajchen`,toggle(14)],
+    [`我本来想吐槽五小时的梗，但是他更新真的太快了 - ajchen`,toggle(14)],
+    [`你的下一个维度，何必是第5维度 - ajchen`,toggle(14)],
+    [`有反镜面么 - QwQe308`,player.mirrorize],
 ];} 
 var s;
 var scrollTimeouts = []; 

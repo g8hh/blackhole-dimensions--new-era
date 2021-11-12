@@ -211,17 +211,29 @@ function getCPGain(mass = player.mass){
     var gain = mass.root(getRl3Req().add(10).log10()).div(5)
     gain = gain.mul(getCpBoosterEff())
     if(hasRl3Upgrade(42)) gain = gain.mul(cuEff(42,"bp"))
+    if(player.mirrorize) gain = gain.mul(player.acp.add(1).pow(0.6))
     return sc("cp",gain).floor()
+}
+function getACPGain(mass = player.mass){
+    var gain = mass.root(getRl3Req().add(10).log10()).div(5)
+    gain = gain.mul(getCpBoosterEff())
+    if(hasRl3Upgrade(42)) gain = gain.mul(cuEff(42,"bp"))
+    var exp = n(0.2)
+    gain = gain.pow(exp)
+    return sc("acp",gain).floor()
 }
 
 function doRl3(force = false){
     if(player.mass.lt(getRl3Req()) && !force) return
-    if(player.mass.gte(getRl3Req())) player.cp = player.cp.add(getCPGain())
+    if(player.mass.gte(getRl3Req())){
+        player.cp = player.cp.add(getCPGain())
+        if(player.mirrorize) player.acp = player.acp.add(getACPGain())
+    }
 
     //reset
     player.mass = zero
     player.ts = zero
-    player.ce = zero
+    player.ce = hasRl4Milestone(1)?player.ce.root(1.5):zero
     for(i in basicDimNums){
         player.bd[i].level = zero
         player.bd[i].num = zero
@@ -246,8 +258,9 @@ function doRl3(force = false){
 function updaterl3(){
     if(SecondTab==`塌缩升级`){
         open(`rl3upg`)
+        if(player.mirrorize) w(`acp`,`您有 ${format(player.acp,0)} 反塌缩点,使得塌缩点产量x${format(player.acp.add(1).pow(0.6))}`)
         w(`cp`,`您有 ${format(player.cp,0)} 塌缩点 购买升级会加高同行升级的价格!(+^${format(one.div(getCuCostPowerDiv()),2,true)})`)
-        w(`rl3`,`重置以获得 ${format(getCPGain(),0)} 塌缩点 (需要 ${format(getRl3Req())} 质量以重置)<br>当前物质上限: ${format(getMaxMass())}`)
+        w(`rl3`,`重置以获得 ${format(getCPGain(),0)} 塌缩点 ${player.mirrorize?`& ${format(getACPGain())} 反塌缩点`:``} (需要 ${format(getRl3Req())} 质量以重置)<br>当前物质上限: ${format(getMaxMass())}`)
         for(i in cu){
             i = Number(i)
             w(`cu`+i,`cu${i}: ${cu[i].desp()} <br> 价格: ${format(cu[i].cost())}`)
