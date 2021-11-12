@@ -14,3 +14,8 @@ var seven = new OmegaNum(7)
 var eight = new OmegaNum(8)
 var nine = new OmegaNum(9)
 var ten = new OmegaNum(10)
+//定义
+var t=new Date()
+var timestart=new Date()
+var diff=0
+var stopSaving = false

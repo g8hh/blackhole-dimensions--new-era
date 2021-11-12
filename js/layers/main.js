@@ -25,7 +25,8 @@ function updateMain(){
     updatecd()
 
     dimNerf = getDimNerf()
-    w("devSpeed",player.devSpeed.eq(1)?"":"调试速度:"+format(player.devSpeed)+"x")
+    w("devSpeed",player.devSpeed.eq(1)?"":"调试速度:"+format(player.devSpeed)+"x ")
+    w("offlineSpeedup",(player.offlineSpeedup.lte(0)?"":`离线加速剩余:${formatTime(player.offlineSpeedup)}`)+(player.ToggleOfflineSpeedup == "off"&&player.offlineSpeedup.gt(0)? ` 离线加速未启用.(预计加速倍率:x${format(getTimeSpeed(true))})` : (player.offlineSpeedup.lte(0)?"":` 使得游戏速率x${format(getTimeSpeed())}`)))
 }
 
 function updateTab(){
@@ -68,7 +69,7 @@ function hotkey(){
             break;
 
         //F12
-        case 123:
+        //case 123:
             player.devSpeed = zero
             while(true) alert("请勿点击F12!请刷新游戏.")
     }
