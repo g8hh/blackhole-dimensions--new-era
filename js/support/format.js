@@ -35,9 +35,12 @@ function egg(n) {
   return n
 }
 function format(decimal, precision = 2, small=false) {
-    decimal = new OmegaNum(decimal)
-    let fmt = decimal.toString()
-    if(decimal.isNaN()) while(true) alert("您的存档里有NaN!请立即刷新游戏,如果无法解决请告诉作者.")
+    decimal = new OmegaNum(decimal);
+    let fmt = decimal.toString();
+    if(decimal.isNaN()){
+      stopSaving = true;
+      while(true) alert("您的存档里有NaN!请立即刷新游戏,如果无法解决请告诉作者.")
+    }
     if(decimal.lt(0)){return "-"+format(decimal.mul(-1), precision)}
     if(decimal.eq(0))return "0"
     if(decimal.lt("0.0001")){return format(decimal.rec(), precision) + "⁻¹"}
@@ -140,6 +143,7 @@ function formatWhole(decimal) {
 }
 
 function formatTime(s) {
+  s = Number(s)
     if (s < 60) return format(s) + "s"
     else if (s < 3600) return formatWhole(Math.floor(s / 60)) + "m " + format(s % 60) + "s"
     else if (s < 86400) return formatWhole(Math.floor(s / 3600)) + "h " + formatWhole(Math.floor(s / 60) % 60) + "m " + format(s % 60) + "s"

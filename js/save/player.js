@@ -1,4 +1,8 @@
 function calcPlayer(){
+    NotOmegaLoader(["time"],Number(t.getTime()))
+    NotOmegaLoader(["cheated"],"no")
+    loader(["offlineSpeedup"],n(0))
+    NotOmegaLoader(["ToggleOfflineSpeedup"],"on")
     NotOmegaLoader(["auto"],"on")
 
     loader(["devSpeed"],n(1))

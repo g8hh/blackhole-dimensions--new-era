@@ -7,21 +7,21 @@ var automations = {
         }
     },    
     bd1:{
-        unlocked(){return hasRl3Chall(11)},
+        unlocked(){return hasRl3Chall(10)},
         on:true,
         automate(){
             if(this.unlocked() && this.on) buybd(1)
         }
     },
     bd2:{
-        unlocked(){return hasRl3Chall(12)},
+        unlocked(){return hasRl3Chall(11)},
         on:true,
         automate(){
             if(this.unlocked() && this.on) buybd(2)
         }
     },
     bd3:{
-        unlocked(){return hasRl3Chall(13)},
+        unlocked(){return hasRl3Chall(11)},
         on:true,
         automate(){
             if(this.unlocked() && this.on) buybd(3)
@@ -35,21 +35,21 @@ var automations = {
         }
     },
     td1:{
-        unlocked(){return hasRl3Chall(21)},
+        unlocked(){return hasRl3Chall(20)},
         on:true,
         automate(){
             if(this.unlocked() && this.on) buytd(1)
         }
     },
     td2:{
-        unlocked(){return hasRl3Chall(22)},
+        unlocked(){return hasRl3Chall(21)},
         on:true,
         automate(){
             if(this.unlocked() && this.on) buytd(2)
         }
     },
     td3:{
-        unlocked(){return hasRl3Chall(23)},
+        unlocked(){return hasRl3Chall(21)},
         on:true,
         automate(){
             if(this.unlocked() && this.on) buytd(3)
