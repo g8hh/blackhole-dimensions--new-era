@@ -25,6 +25,12 @@
         <script src = "js/layers/3-BigCrunch/cd.js"></script>
         <script src = "js/layers/3-BigCrunch/rl3challs.js"></script>
 
+        <script src = "js/layers/4-BreakingMirror/JustARl4Tip.js"></script>
+        <script src = "js/layers/4-BreakingMirror/layer4.js"></script>
+        <script src = "js/layers/4-BreakingMirror/md.js"></script>
+        <script src = "js/layers/4-BreakingMirror/rl4chall.js"></script>
+        <script src = "js/layers/4-BreakingMirror/rl4milestones.js"></script>
+
         <script src = "js/support/game.js"></script>
         <script src = "js/support/news.js"></script>
         <script src = "js/softcaps.js"></script>
@@ -38,13 +44,13 @@
             <p id="news" style="transform: translateX(-2512px); transition: transform 35.33s linear 0s;"></p>
             <autoStat id = "autoStat"></autoStat>
             <h2 id=mass class="mass">黑洞质量 :  <mass id=massNum class="massNum"></mass> <mass id=massProc class="massProc"></mass></h2>
-            <p>v0.272 - QoL更新(离线加速+自动化奖励预支) 当前endgame:约1e17500质量+全挑战+全升级</p><devSpeed id = "devSpeed"></devSpeed><offlineSpeedup id = "offlineSpeedup"></offlineSpeedup>
+            <p>v0.3 - 镜面 当前endgame:打破镜面状态下1e16塌缩点</p><devSpeed id = "devSpeed"></devSpeed><offlineSpeedup id = "offlineSpeedup"></offlineSpeedup>
             <br />
             <!--一层菜单-->
             <button onclick="FirstTab = '设置';SecondTab = '设置'" class="tab" id=tab_settings>设置</button>
             <button onclick="FirstTab = '物质维度';SecondTab = '黑洞维度'" class="tab" id=tab_md>物质维度</button>
             <button onclick="if(player.bestMass.lt(Number.MAX_VALUE)) return;FirstTab = '塌缩';SecondTab = '塌缩升级'" class="tab" id=tab_rl3>塌缩</button>
-            <button onclick="if(!hasRl3Chall(51)) return;alert('恭喜v0.27通关!镜面正在绝赞咕咕中（？')" class="tab" id=tab_rl4>镜面</button>
+            <button onclick="if((!hasRl3Chall(51)) && !player.mirrorize) return;FirstTab = '镜面';SecondTab = '镜面里程碑';changeRl4Tip()" class="tab" id=tab_rl4>镜面</button>
             <br /><br />
             <!--二层菜单-->
             <!--设置-->
@@ -67,11 +73,16 @@
                 <button onclick="if(!hasRl3Upgrade(14)) return;SecondTab = '奇点维度'" id=tab_rl3dim class="tab">奇点维度</button>
                 <button onclick="if(!hasRl3Upgrade(21)) return;SecondTab = '塌缩挑战'" id=tab_rl3cha class="tab">塌缩挑战</button>
             </subtab>
+            <subtab id=subtab_rl4>
+                <button onclick="SecondTab = '镜面里程碑';changeRl4Tip()" id=tab_rl4milestone class="tab">镜面里程碑</button>
+                <button onclick="SecondTab = '镜面维度'" id=tab_rl4dim class="tab">镜面维度</button>
+                <button onclick="SecondTab = '镜面挑战'" id=tab_rl4chall class="tab">镜面挑战</button>
+            </subtab>
             <br /><br /><br />
 
             <tab id=bd>
                 <button id=buyMaxbd onclick="buyMaxbd()" class="buymax">购买最大(M)</button><br />
-                <subItem id=preBCTickspeed></subItem><br />
+                <subItem id=BCTickspeed></subItem><br />
                 <button id=bd0 onclick="buybd(0)" class="dim"></button><br /><br />
                 <button id=bd1 onclick="buybd(1)" class="dim"></button><br /><br />
                 <button id=bd2 onclick="buybd(2)" class="dim"></button><br /><br />
@@ -90,6 +101,7 @@
             </tab>
 
             <tab id=rl3upg>
+                <subItem id=acp></subItem><br />
                 <subItem id=cp></subItem><br /><br />
                 <button id=rl3 onclick="doRl3()" class="dim"></button><br /><br />
                 <button id=resetCU onclick="resetCU()" class="dim">重置塌缩升级</button><br />
@@ -117,11 +129,11 @@
                 <button id=cu44 onclick="buycu(44)" class="upg"></button>
                 <button id=cu45 onclick="buycu(45)" class="upg"></button><br>
 
-                <button id=cu51 onclick="buycu(51)" class="upg"></button>
+                <mirror id=row5cu><button id=cu51 onclick="buycu(51)" class="upg"></button>
                 <button id=cu52 onclick="buycu(52)" class="upg"></button>
                 <button id=cu53 onclick="buycu(53)" class="upg"></button>
                 <button id=cu54 onclick="buycu(54)" class="upg"></button>
-                <button id=cu55 onclick="buycu(55)" class="upg"></button><br>
+                <button id=cu55 onclick="buycu(55)" class="upg"></button><br></mirror>
             </tab>
 
             <tab id=cd>
@@ -165,6 +177,32 @@
                 <button id=c51 onclick="enterRl3Chall(51)" class="META"></button>
             </tab>
 
+            <tab id=rl4chall>
+                <help>在镜面挑战中,镜面重置可以获得一种新的资源"镜面碎片".镜面碎片可以大幅度加强镜面维度.对于刚解锁镜面重置的人来说,镜面挑战暂时是不能完成的.</help><br>
+                <button id=exitRl4Chall onclick="exitRl4Chall()" class="dim">退出镜面挑战</button><br />
+
+                <button id=mc1 onclick="enterRl4Chall(1)" class="dim">制作中...</button>
+            </tab>
+
+            <tab id=md>
+                <subItem id=en></subItem><br />
+                <subItem id=am></subItem><br />
+                <subItem id=mirror></subItem><br /><br />
+                <button id=buyMaxmd onclick="buyMaxmd()" class="buymax">购买最大</button><br /><br />
+                <button id=md0 onclick="buymd(0)" class="dim"></button><br /><br />
+                <button id=md1 onclick="buymd(1)" class="dim"></button><br /><br />
+                <button id=md2 onclick="buymd(2)" class="dim"></button><br /><br />
+                <button id=md3 onclick="buymd(3)" class="dim"></button><br /><br />
+                <button id=mirrorReserve onclick="mirrorReserve()" class="dim">镜面反转:镜面三维数量变为镜面零维的1.5次根,镜面二维数量变为镜面一维的1.5次根,以此类推.清空生产倍率.</button>
+            </tab>
+
+            <tab id=rl4milestones>
+                <tip id=rl4Tip class = tip></tip><br /><br />
+                <subItem id=MM></subItem><br />
+                <button id=rl4 onclick="doRl4()" class="dim"></button><br /><br />
+                <desp>一次性获得大于等于对应的镜物质以获取对应里程碑!</desp><br /><br />
+                <button id=rl4milestone1 class="dim"></button><br /><br />
+            </tab>
         </app>
     </body>
 </html>

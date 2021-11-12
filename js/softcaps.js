@@ -66,6 +66,7 @@ var softcaps = {
             name:"黑洞质量",
             start(){
                 var start = n("1e800")
+                if(player.mirrorize) start = n("1e2000")
                 return start
             },
             pow(){
@@ -126,6 +127,7 @@ var softcaps = {
             name:"塌缩点倍增器",
             start(){
                 var start = n(50)
+                if(player.mirrorize) start = n(20)
                 return start
             },
             pow(){
