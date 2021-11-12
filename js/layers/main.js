@@ -24,6 +24,11 @@ function updateMain(){
     updaterl3()
     updatecd()
 
+    updaterl4()
+    updatemd()
+    updaterl4milestone()
+    updateRl4Chall()
+
     dimNerf = getDimNerf()
     w("devSpeed",player.devSpeed.eq(1)?"":"调试速度:"+format(player.devSpeed)+"x ")
     w("offlineSpeedup",(player.offlineSpeedup.lte(0)?"":`离线加速剩余:${formatTime(player.offlineSpeedup)}`)+(player.ToggleOfflineSpeedup == "off"&&player.offlineSpeedup.gt(0)? ` 离线加速未启用.(预计加速倍率:x${format(getTimeSpeed(true))})` : (player.offlineSpeedup.lte(0)?"":` 使得游戏速率x${format(getTimeSpeed())}`)))
@@ -50,10 +55,15 @@ function updateTab(){
     }else{
         close("subtab_rl3")
     }
-    if(hasRl3Chall(51)){
+    if(hasRl3Chall(51) || player.mirrorize){
         normal("tab_rl4",["tab"])
     }else{
         red("tab_rl4",["tab"])
+    }
+    if(FirstTab == "镜面"){
+        open("subtab_rl4")
+    }else{
+        close("subtab_rl4")
     }
 }
 

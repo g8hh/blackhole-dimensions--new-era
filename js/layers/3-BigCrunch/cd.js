@@ -1,6 +1,6 @@
 var cdMult = {}
 var CDcost = [n(1),n(8),n(64),n(256)]
-var CDcostMult = [n(2),n(4),(8),n(16)]
+var CDcostMult = [n(2),n(4),n(8),n(16)]
 function buyMaxcd(){
     buyCpBooster()
     for(i in basicDimNums) buycd(i)
@@ -23,6 +23,7 @@ function getAllcdMult(){
     var mult = n(1)
     if(!hasRl3Upgrade(14)) mult = n(0)
     if(inRl3Chall(31)) mult = mult.div(player.mass.add(10).log10())
+    mult = mult.mul(getENEff())
     return mult
 }
 function getAnycdMult(dimNum){
@@ -75,6 +76,7 @@ function getCuBoosterEffBase(){
     var effBase = n(1.2)
     if(hasRl3Upgrade(41)) effBase = effBase.add(cuEff(41))
     if(hasRl3Chall(32)) effBase = effBase.add(0.05)
+    if(player.mirrorize) effBase = effBase.sqrt()
     return effBase
 }
 function getCpBoosterEff(){
@@ -94,12 +96,12 @@ function updatecd(){
     for(i in basicDimNums) cdMult[i] = getAnycdMult(i)
     for(i in basicDimNums){
         i = Number(i)
-        if(i<=2) player.cd[i].num = player.cd[i].num.add(player.cd[i+1].num.mul(cdMult[i+1]).root(dimNerf).mul(diff).mul(getPreBCTickspeed()).div(10))
-        player.cd[i].procmult = player.cd[i].procmult.add(player.cd[i].num.mul(cdMult[i]).mul(diff).mul(getPreBCTickspeed()))
+        if(i<=2) player.cd[i].num = player.cd[i].num.add(player.cd[i+1].num.mul(cdMult[i+1]).root(dimNerf).mul(diff).mul(getBCTickspeed()).div(10))
+        player.cd[i].procmult = player.cd[i].procmult.add(player.cd[i].num.mul(cdMult[i]).mul(diff).mul(getBCTickspeed()))
         proc = proc.mul(player.cd[i].procmult)
     }
     proc = sc("ce",proc)
-    player.ce = player.ce.add(proc.mul(diff).mul(getPreBCTickspeed()))
+    player.ce = player.ce.add(proc.mul(diff).mul(getBCTickspeed()))
 
     //显示部分!
     if(SecondTab!="奇点维度") return close("cd")

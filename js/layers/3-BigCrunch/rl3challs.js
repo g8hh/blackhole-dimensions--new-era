@@ -33,7 +33,7 @@ var rl3chall = {
     44:{desp(){return `元4挑战-触发所有x-4挑战.挑战难度+110%.<br>奖励:看看下方......`}},
     51:{desp(){
         if(!hasRl3Chall(44)) return "这是什么?你无法知道这个挑战的信息.或许这个挑战完成后会有什么新变化?元4挑战可能含有着这个挑战的信息.通过元4再来试试."
-        return `时间线在收束...元元挑战-触发所有挑战.挑战难度锁死为72.5%.<br>奖励:击碎镜面世界...?(Tip:未制作.)`
+        return `时间线在收束...元元挑战-触发所有挑战.挑战难度锁死为72.5%.<br>奖励:击碎镜面世界...?`
     }},
 }
 
@@ -77,9 +77,14 @@ function checkRl3Chall(){
     if(!rl3chall[player.chall]) return
     if(rl3chall[player.chall].specialGoal){
         if(rl3chall[player.chall].specialGoal()){
-            if(!player.challComp.includes(player.chall)){player.challComp.push(player.chall);exitRl3Chall(true)}
+            if(!player.challComp.includes(player.chall)){compChall()}
         }
-    }else if(!player.challComp.includes(player.chall)) if(player.mass.gte(getRl3Req())){player.challComp.push(player.chall);exitRl3Chall(true)}
+    }else if(!player.challComp.includes(player.chall)) if(player.mass.gte(getRl3Req())){compChall()}
+}
+function compChall(id = player.chall,resetless = false){
+    player.challComp.push(id);
+    if(!resetless) exitRl3Chall(true)
+    if(hasRl4Milestone(1)) if(Math.floor(id/10)!=id/10) compChall(id-1,true)
 }
 
 function updaterl3cha(){
