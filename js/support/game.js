@@ -15,7 +15,7 @@ function loop(){
     t = new Date()
     var realDiff = OmegaNum((Number(t.getTime())-timestart)/1000)
     diff=OmegaNum(Math.min((Number(t.getTime())-timestart)/1000,1/20))
-    if(realDiff.gte(diff)) player.offlineSpeedup = player.offlineSpeedup.add(realDiff.sub(diff))
+    if(realDiff.gte(diff)) player.offlineSpeedup = player.offlineSpeedup.add(realDiff.sub(diff).add(1).pow(0.925).sub(1))
     var offlineBoost = getTimeSpeed().mul(player.devSpeed)
     diff=diff.mul(offlineBoost)
     timestart=t.getTime()
