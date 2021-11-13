@@ -5,6 +5,7 @@ function calcPlayer(){
     NotOmegaLoader(["ToggleOfflineSpeedup"],"on")
     NotOmegaLoader(["auto"],"on")
 
+    NotOmegaLoader(["devMode"],false)
     loader(["devSpeed"],n(1))
     loader(["mass"],n(0))
     loader(["bestMass"],n(0))
