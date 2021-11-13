@@ -32,7 +32,7 @@ var cu = {
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },
     12:{
-        desp(){return `物质上限^${format(this.effect())}.(Tip:您真的确定您能在无限后成吨的软上限中达到上限么)`},
+        desp(){return `物质上限^${format(this.effect())}.(Tip:不建议开局点这个...)`},
         effect(){return n(1.2)},
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },

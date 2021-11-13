@@ -21,7 +21,7 @@ var rl3chall = {
     22:{desp(){return `时间速率除以[${format(this.eff())}/1.1^(t^0.75)+1].<br>(当前:/${format(this.totalEff(),2,true)})<br>奖励:无`},eff(){return n(9).pow(allChallDiff)},totalEff(){return this.eff().div(n(1.1).pow(player.t.pow(0.75))).add(1)}},
     23:{desp(){return `时间三维无法购买.<br>奖励:无`}},
     24:{desp(){return `空间扭曲能且只能加成时间扭曲的物质计数,但其效果^${format(n(2**0.5).root(this.eff()))}(软上限后).时间维度sc1立即出现且强度变为其${format(this.eff().add(1))}倍.<br>奖励:无`},eff(){return n(0.5).mul(allChallDiff)}},
-    30:{desp(){return `塌缩要求^${format(this.eff())},时间碎片在达到(质量^0.33)时会受到产量^0.5的减益.<br>奖励:您的时间扭曲的物质计数不再会低于物质^0.5.`},eff(){return n(1.5).pow(allChallDiff.sqrt())}},
+    30:{desp(){return `塌缩要求^${format(this.eff())},时间碎片在达到(质量^0.33)时会受到产量^0.5的减益.(Tip:cu11+12+22上限足够)<br>奖励:您的时间扭曲的物质计数不再会低于物质^0.5.`},eff(){return n(1.5).pow(allChallDiff.sqrt())}},
     31:{desp(){return `时间维度倍率/lg(物质+10)^^${format(n(0.33).root(this.eff().mul(3).pow(0.5)).add(1))}^${format(this.eff())}(=${format(this.totalEff())}),奇点维度倍率/lg(物质+10).cu25的效果强制启用.<br>奖励:您的空间扭曲的物质计数不再会低于物质^0.5.`},eff(){return n(0.33).mul(allChallDiff)},totalEff(){return player.mass.add(10).log10().tetr(n(0.33).root(this.eff().mul(3).pow(0.5)).add(1)).pow(this.eff())}},
     32:{desp(){return `对黑洞维度和时间维度购买数量的sc2立即开始,且强度变为${format(this.eff().mul(100))}%<br>奖励:塌缩点倍增器底数+0.05.`},eff(){return n(1.25).pow(allChallDiff)}},
     33:{desp(){return `黑洞质量的sc3立即开始,且强度变为${format(this.eff().mul(100))}%<br>奖励:减弱塌缩升级的价格增长(指数/1.3).`},eff(){return n(0.3).mul(allChallDiff)}},

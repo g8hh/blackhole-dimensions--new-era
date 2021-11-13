@@ -4,7 +4,7 @@ function getTimeSpeed(force = false){
         var boost = player.offlineSpeedup.add(1).root(2).div(10).max(2)
         if(force) return boost
         tickspeed = tickspeed.mul(boost)
-        player.offlineSpeedup = player.offlineSpeedup.sub(boost.sub(1).mul(2).mul(diff))
+        player.offlineSpeedup = player.offlineSpeedup.sub(boost.sub(1).mul(3).mul(diff))
     }
     player.offlineSpeedup = player.offlineSpeedup.max(0)
     return tickspeed
@@ -13,8 +13,10 @@ function getTimeSpeed(force = false){
 function loop(){
     //deltatime-计算时间间隔
     t = new Date()
-    diff=OmegaNum(Math.min((Number(t.getTime())-timestart)/1000,1/20)).mul(player.devSpeed)
-    var offlineBoost = getTimeSpeed()
+    var realDiff = OmegaNum((Number(t.getTime())-timestart)/1000)
+    diff=OmegaNum(Math.min((Number(t.getTime())-timestart)/1000,1/20))
+    if(realDiff.gte(diff)) player.offlineSpeedup = player.offlineSpeedup.add(realDiff.sub(diff))
+    var offlineBoost = getTimeSpeed().mul(player.devSpeed)
     diff=diff.mul(offlineBoost)
     timestart=t.getTime()
     //计算结束 真-输出是diff
