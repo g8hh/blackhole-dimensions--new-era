@@ -37,12 +37,16 @@
     color: black;
     background-color: lime;
 }
+.lightBlue{
+    color: black;
+    background-color: rgb(150, 150, 200);
+}
 .grey{
     color: white;
     background-color: rgb(25, 25, 25);
 }
 .tip{
-    color:rgb(50, 50, 75);
+    color:rgb(150, 150, 200);
 }
 .upg{
     height: 125px;

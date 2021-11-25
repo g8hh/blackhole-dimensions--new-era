@@ -54,6 +54,7 @@ function calcPlayer(){
     loader(["mirrorMatter"],n(0))
     loader(["bestMirrorMatterGain"],n(0))
     NotOmegaLoader(["mirrorize"],false)
+    loader(["mirrorizeTimes"],n(0))
     loader(["acp"],n(0))
 //md
     loader(["am"],n(0))
@@ -66,4 +67,10 @@ function calcPlayer(){
         else loader(["md",a,"procmult"],n(0))
         loader(["md",a,"level"],n(0))
     }
+//mc
+    loader(["mirrorShard"],n(0))
+    NotOmegaLoader(["rl4chall"],null)
+    NotOmegaLoader(["activeRl4Chall"],[])
+    player.rl4ChallComp = {}
+    for(i in rl4chall) loader(["rl4ChallComp",i],n(0))
 }

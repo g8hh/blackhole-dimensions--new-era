@@ -4,10 +4,18 @@ function getAllChallDiff(){
     var diffcultity = one
     if(inRl3Chall(40)) diffcultity = diffcultity.add(1)
     if(inRl3Chall(41)) diffcultity = diffcultity.add(1)
-    if(inRl3Chall(42)) diffcultity = diffcultity.add(15)
-    if(inRl3Chall(43)) diffcultity = diffcultity.add(5.75)
-    if(inRl3Chall(44)) diffcultity = diffcultity.add(1.1)
-    if(inRl3Chall(51)) diffcultity = n(0.725)
+    if(!player.mirrorize){
+        if(inRl3Chall(42)) diffcultity = diffcultity.add(15)
+        if(inRl3Chall(43)) diffcultity = diffcultity.add(5.75)
+        if(inRl3Chall(44)) diffcultity = diffcultity.add(1.1)
+        if(inRl3Chall(51)) diffcultity = n(0.725)
+    }else{
+        if(inRl3Chall(42)) diffcultity = diffcultity.add(5)
+        if(inRl3Chall(43)) diffcultity = diffcultity.add(3)
+        if(inRl3Chall(44)) diffcultity = diffcultity.add(5)
+        if(inRl3Chall(51)) diffcultity = n(0.5)
+    }
+    if(inRl4Chall(1)) diffcultity = diffcultity.mul(getRl4ChallEff(1))
     return diffcultity
 }
 var rl3chall = {
@@ -16,7 +24,7 @@ var rl3chall = {
     12:{desp(){return `对于时间扭曲效果的物质计数变为其${format(this.eff())}次根.(即物质在效果公式里开根)<br>奖励:无.`},eff(){return n(2).pow(allChallDiff)}},
     13:{desp(){return `维度互相生产量变为其${format(this.eff())}次根,但同时黑洞低维倍率被黑洞高维购买倍率的${format(this.eff())}次根倍增.<br>奖励:无.`},eff(){return n(2).pow(allChallDiff.pow(0.5))}},
     14:{desp(){return `cX4的挑战都会很有新意(?<br>物质上限变为其1.5次根,挑战目标改为:使时间碎片达到${format(this.eff())}(随物质要求变动).<br>奖励:cu13,23,33,43也对奇点维度生效`},eff(){return getRl3Req().pow(allChallDiff)},specialGoal(){return player.ts.gte(this.eff())}},
-    20:{desp(){return `新增变量*时间速率*.每当你购买一个物质维度时,该时间速率/${format(this.eff())},因此产生的时间速率减益每秒^0.8.该减益最低为e-10.(当前:/${format(player.c20Nerf,2,true)})<br>奖励:时间零+一维自动化`},eff(){return n(1.05).pow(allChallDiff)},update(){player.c20Nerf = player.c20Nerf.pow(n(0.8).pow(diff))}},
+    20:{desp(){return `新增变量*时间速率*.每当你购买一个物质维度时,该时间速率/${format(this.eff())},因此产生的时间速率减益每秒^0.8.(当前:/${format(player.c20Nerf,2,true)})<br>奖励:时间零+一维自动化`},eff(){return n(1.05).pow(allChallDiff)},update(){player.c20Nerf = player.c20Nerf.pow(n(0.8).pow(diff))}},
     21:{desp(){return `新增变量*t*(t=距离上次重置的时间).时间速率除以[(t^${format(this.eff())})/lg(质量+10)+1].(当前:/${format(this.totalEff(),2,true)})<br>奖励:时间二+三维自动化`},eff(){return n(1.25).pow(allChallDiff)},totalEff(){return player.t.pow(this.eff()).div(player.mass.add(10).log10()).add(1)}},
     22:{desp(){return `时间速率除以[${format(this.eff())}/1.1^(t^0.75)+1].<br>(当前:/${format(this.totalEff(),2,true)})<br>奖励:无`},eff(){return n(9).pow(allChallDiff)},totalEff(){return this.eff().div(n(1.1).pow(player.t.pow(0.75))).add(1)}},
     23:{desp(){return `时间三维无法购买.<br>奖励:无`}},
@@ -25,20 +33,31 @@ var rl3chall = {
     31:{desp(){return `时间维度倍率/lg(物质+10)^^${format(n(0.33).root(this.eff().mul(3).pow(0.5)).add(1))}^${format(this.eff())}(=${format(this.totalEff())}),奇点维度倍率/lg(物质+10).cu25的效果强制启用.<br>奖励:您的空间扭曲的物质计数不再会低于物质^0.5.`},eff(){return n(0.33).mul(allChallDiff)},totalEff(){return player.mass.add(10).log10().tetr(n(0.33).root(this.eff().mul(3).pow(0.5)).add(1)).pow(this.eff())}},
     32:{desp(){return `对黑洞维度和时间维度购买数量的sc2立即开始,且强度变为${format(this.eff().mul(100))}%<br>奖励:塌缩点倍增器底数+0.05.`},eff(){return n(1.25).pow(allChallDiff)}},
     33:{desp(){return `黑洞质量的sc3立即开始,且强度变为${format(this.eff().mul(100))}%<br>奖励:减弱塌缩升级的价格增长(指数/1.3).`},eff(){return n(0.3).mul(allChallDiff)}},
-    34:{desp(){return `挑战还有意义么?奇点维度只加成时间维度,维度间产量变为其${format(this.eff())}次根,时间碎片效果变为其${format(this.eff())}次根,塌缩要求变为其${format(this.eff())}次方.<br>奖励:你真的还需要奖励么?空间扭曲sc1改成/2.`},eff(){return n(2.1).pow(allChallDiff.pow(0.5))}},
+    34:{desp(){
+        return `挑战还有意义么?奇点维度只加成时间维度,维度间产量变为其${format(this.eff())}次根,时间碎片效果变为其${format(this.eff())}次根,塌缩要求变为其${format(this.eff())}次方.<br>奖励:你真的还需要奖励么?空间扭曲sc1改成/2.`
+    },eff(){
+        if(player.mirrorize) return n(1.33).pow(allChallDiff.pow(0.5))
+        return n(2.1).pow(allChallDiff.pow(0.5))
+    }},
     40:{desp(){return `元0挑战-触发所有x-0挑战.挑战难度+100%.<br>奖励:c30奖励改为^1.`}},
     41:{desp(){return `元1挑战-触发所有x-1挑战.挑战难度+100%,且t不会低于10.<br>奖励:c31奖励改为^1.`},update(){player.t = player.t.max(10)}},
-    42:{desp(){return `元2挑战-触发所有x-2挑战.挑战难度+1500%.<br>奖励:无.`}},
-    43:{desp(){return `元3挑战-触发所有x-3挑战.挑战难度+575%.<br>奖励:无.`}},
-    44:{desp(){return `元4挑战-触发所有x-4挑战.挑战难度+110%.<br>奖励:看看下方......`}},
+    42:{desp(){
+        return `元2挑战-触发所有x-2挑战.挑战难度+${player.mirrorize?"500":"1500"}%.<br>奖励:无.`
+    }},
+    43:{desp(){
+        return `元3挑战-触发所有x-3挑战.挑战难度+${player.mirrorize?"300":"575"}%.<br>奖励:无.`
+    }},
+    44:{desp(){
+        return `元4挑战-触发所有x-4挑战.挑战难度+${player.mirrorize?"500":"110"}%.<br>奖励:${player.mirrorize?"无":"看看下方......"}`
+    }},
     51:{desp(){
-        if(!hasRl3Chall(44)) return "这是什么?你无法知道这个挑战的信息.或许这个挑战完成后会有什么新变化?元4挑战可能含有着这个挑战的信息.通过元4再来试试."
-        return `时间线在收束...元元挑战-触发所有挑战.挑战难度锁死为72.5%.<br>奖励:击碎镜面世界...?`
+        if(!hasRl3Chall(44) && !player.mirrorize) return "这是什么?您无法知道这个挑战的信息.或许这个挑战完成后会有什么新变化?元4挑战可能含有着这个挑战的信息.通过元4再来试试."
+        return `时间线在收束...元元挑战-触发所有挑战.挑战难度锁死为${player.mirrorize?"50":"72.5"}%.<br>奖励:击碎镜面世界...?`
     }},
 }
 
 function enterRl3Chall(id){
-    if(!confirm("你确定要进入挑战么?这会强制进行一次塌缩重置,并且你不能从中获取塌缩点数.")) return
+    if(!confirm("您确定要进入挑战么?这会强制进行一次塌缩重置,并且您不能从中获取塌缩点数.")) return
     player.activeChall = []
     var row = Math.floor(id/10)
     var col = id - row*10
@@ -54,7 +73,7 @@ function enterRl3Chall(id){
 }
 function exitRl3Chall(force = false){
     if(player.chall == null) return
-    if(!force) if(!confirm("你确定要退出挑战么?这会强制进行一次塌缩重置,并且你不能从中获取塌缩点数.同样的,你无法完成这个挑战.")) return
+    if(!force) if(!confirm("您确定要退出挑战么?这会强制进行一次塌缩重置,并且您不能从中获取塌缩点数.同样的,您无法完成这个挑战.")) return
     doRl3(true)
     player.chall = null
     player.activeChall = []
@@ -82,9 +101,10 @@ function checkRl3Chall(){
     }else if(!player.challComp.includes(player.chall)) if(player.mass.gte(getRl3Req())){compChall()}
 }
 function compChall(id = player.chall,resetless = false){
-    player.challComp.push(id);
+    if(!player.challComp.includes(id)) player.challComp.push(id);
     if(!resetless) exitRl3Chall(true)
     if(hasRl4Milestone(1)) if(Math.floor(id/10)!=id/10) compChall(id-1,true)
+    if(hasRl4Milestone(2)) if(id == 51) player.challComp = [10,11,12,13,14,20,21,22,23,24,30,31,32,33,34,40,41,42,43,44,51]
 }
 
 function updaterl3cha(){
