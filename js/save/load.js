@@ -40,7 +40,7 @@ function load(save = null){
     player.time = Number(t.getTime())
     //window.alert("test")
     fixSave()
-    player.version = 0.301
+    player.version = 0.4
 };
 function save(){
     if(toClearSave){
@@ -56,6 +56,12 @@ function save(){
 };
 
 function fixSave(){
+    if(saveStr.version < 0.305){
+        if(player.mirrorize) player.challComp = []
+    }
+    if(saveStr.version < 0.304){
+        player.mirrorizeTimes = player.mirrorize?n(1):n(0)
+    }
     if(saveStr.version < 0.23){
         if(!player.cp.eq(0)) doRl3(true)
         player.ce = n(0)

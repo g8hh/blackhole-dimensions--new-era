@@ -39,7 +39,7 @@ function format(decimal, precision = 2, small=false) {
     let fmt = decimal.toString();
     if(decimal.isNaN()){
       stopSaving = true;
-      while(true) alert("您的存档里有NaN!请立即刷新游戏,如果无法解决请告诉作者.")
+      while(true){console.error();alert("您的存档里有NaN!请立即刷新游戏,如果无法解决请告诉作者.")}
     }
     if(decimal.lt(0)){return "-"+format(decimal.mul(-1), precision)}
     if(decimal.eq(0))return "0"
