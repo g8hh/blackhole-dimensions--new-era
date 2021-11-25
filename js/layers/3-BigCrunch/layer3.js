@@ -32,7 +32,7 @@ var cu = {
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },
     12:{
-        desp(){return `物质上限^${format(this.effect())}.(Tip:不建议开局点这个...)`},
+        desp(){return `物质上限^${format(this.effect())}.(Tip:不建议首个点这个...)`},
         effect(){return n(1.2)},
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },
@@ -55,7 +55,7 @@ var cu = {
         cost(){return n(2).pow(getCuCostPower(1)).floor()}
     },
     21:{
-        desp(){return `解锁挑战(解锁自动化,未制作),黑洞/时间购买最大时购买所有物质维度`},
+        desp(){return `解锁挑战(解锁自动化),黑洞/时间购买最大时购买所有物质维度`},
         effect(){return true},
         cost(){return n(3).pow(getCuCostPower(2)).floor()}
     },
@@ -97,22 +97,34 @@ var cu = {
     },
     33:{
         desp(){return `物质维度购买倍率的底数+${format(this.effect(),2,true)}(基于挑战完成数).`},
-        effect(){return n(0.010).mul(player.challComp.length**0.85)},
+        effect(){
+            if(player.mirrorize) return n(0.010).mul((player.challComp.length*2.14)**0.85)
+            return n(0.010).mul(player.challComp.length**0.85)
+        },
         cost(){return n(10).pow(getCuCostPower(3)).floor()}
     },
     34:{
         desp(){return `奇点维度效果指数+${format(this.effect(),2,true)}.(基于挑战完成数)`},
-        effect(){return n(0.015).mul(player.challComp.length**0.85)},       
+        effect(){
+            if(player.mirrorize) return n(0.015).mul((player.challComp.length*2.14)**0.85)
+            return n(0.015).mul(player.challComp.length**0.85)
+        },       
         cost(){return n(10).pow(getCuCostPower(3)).floor()}
     },
     35:{
         desp(){return `基于挑战完成数,指数加成cu25和cu15效果(^${format(this.effect().cu25)}),并且减弱塌缩升级的价格增长(指数/${format(this.effect().costInc)})`},
-        effect(){return {cu25:player.challComp.length**0.85*0.15+1,costInc:n(1.33)}},        
+        effect(){
+            if(player.mirrorize) return {cu25:(player.challComp.length*2.14)**0.85*0.15+1,costInc:n(1.33)}
+            return {cu25:player.challComp.length**0.85*0.15+1,costInc:n(1.33)}
+        },        
         cost(){return n(10).pow(getCuCostPower(3)).floor()}
     },
     41:{
         desp(){return `基于挑战完成数,加成塌缩点倍增器的效果底数(+${format(this.effect(),2,true)}),塌缩点倍增器+3.`},
-        effect(){return n(0.01).mul(player.challComp.length**0.75)},        
+        effect(){
+            if(player.mirrorize) return n(0.01).mul((player.challComp.length*2.14)**0.75)
+            return n(0.01).mul(player.challComp.length**0.75)
+        },        
         cost(){return n(100).pow(getCuCostPower(4)).floor()}
     },
     42:{
@@ -122,6 +134,7 @@ var cu = {
                 case "bp":
                     return getMaxMass().root(getRl3Req().add(1e10).log10()).log10()
                 case "cu32":
+                    if(player.mirrorize) return (player.challComp.length*2.14)**0.75*0.125+1
                     return player.challComp.length**0.75*0.125+1
             }
         },   
@@ -156,7 +169,7 @@ var cu = {
         cost(){return n(1e7).pow(getCuCostPower(5)).floor()}
     },
     52:{
-        desp(){return `打破质量上限(Tip:挑战内不触发,并且超过上限时会受到sc3...猜猜sc3有多离谱?).黑洞质量软上限效果变为原来的50%.`},
+        desp(){return `打破质量上限(Tip:挑战内不触发,并且超过上限时会受到sc3.).黑洞质量软上限效果变为原来的50%.`},
         effect(){return true},        
         cost(){return n(1e7).pow(getCuCostPower(5)).floor()}
     },

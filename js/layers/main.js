@@ -8,6 +8,8 @@ function getDimNerf(){
 
 function updateMain(){
     player.t = player.t.add(diff)
+    dimNerf = getDimNerf()
+
     updateTab()
     updatesc()  
 
@@ -28,8 +30,6 @@ function updateMain(){
     updatemd()
     updaterl4milestone()
     updateRl4Chall()
-
-    dimNerf = getDimNerf()
     w("devSpeed",player.devSpeed.eq(1)?"":"调试速度:"+format(player.devSpeed)+"x ")
     w("offlineSpeedup",(player.offlineSpeedup.lte(0)?"":`离线加速剩余:${formatTime(player.offlineSpeedup)}`)+(player.ToggleOfflineSpeedup == "off"&&player.offlineSpeedup.gt(0)? ` 离线加速未启用.(预计加速倍率:x${format(getTimeSpeed(true))})` : (player.offlineSpeedup.lte(0)?"":` 使得游戏速率x${format(getTimeSpeed(true))}`)))
 }
@@ -76,6 +76,7 @@ function hotkey(){
         case 77:
             if(SecondTab == "黑洞维度") buyMaxbd()
             if(SecondTab == "时间维度") buyMaxtd()
+            if(SecondTab == "奇点维度" && hasRl4Milestone(1)) buyMaxcd()
             break;
 
         //F12

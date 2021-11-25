@@ -28,7 +28,7 @@ var softcaps = {
         ts:{
             name:"时间碎片",
             start(){
-                var start = n("1e2000")
+                var start = n("1e2000").max(getMaxMass().add(1).mul(10))
                 return start
             },
             pow(){
@@ -66,7 +66,7 @@ var softcaps = {
             name:"黑洞质量",
             start(){
                 var start = n("1e800")
-                if(player.mirrorize) start = n("1e2000")
+                if(player.mirrorize) start = n("1e2000").max(getMaxMass().add(1).mul(10))
                 return start
             },
             pow(){
@@ -161,6 +161,7 @@ var softcaps = {
             name:"塌缩点",
             start(){
                 var start = n(1e100)
+                if(player.mirrorize) start = n(1e25)
                 return start
             },
             pow(){
@@ -275,6 +276,10 @@ function sc(name,num,show = true){
 
 function updatesc(){
     if(FirstTab!="设置") return
+    //一些特别的 不会被一直侦测的值在这里更新
+    sc("cpBooster",player.cpBooster)
+    sc("cp",player.cp)
+
     var showStr = "<h2>软上限:</h2>"
     var hasSC = {sc1:false,sc2:false,sc3:false}
     for(i1 in softcapStr){
