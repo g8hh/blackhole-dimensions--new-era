@@ -85,7 +85,7 @@ function updatebd(){
     proc = sc("mass",proc)
 
     player.mass = player.mass.add(proc.mul(diff).mul(getBCTickspeed())).max(getMinMass())
-    if((!hasRl3Upgrade(52)||player.chall!=null)&&!(player.mirrorize&&hasRl3Upgrade(42))) player.mass = player.mass.min(getMaxMass())
+    if((!hasRl3Upgrade(52)||player.chall!=null)&&!(player.mirrorize&&hasRl3Upgrade(42)) && !hasRl4Milestone(8)) player.mass = player.mass.min(getMaxMass())
     if(!player.mirrorize) player.mass = player.mass.min("e20000")
     player.bestMass = player.bestMass.max(player.mass)
 

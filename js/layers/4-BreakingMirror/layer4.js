@@ -1,8 +1,15 @@
+function mirrorizeTimesGain(){
+    if(player.rl4chall != null) return zero
+    var gain = one
+    if(hasRl4Milestone(9)) gain = gain.mul(getMMGain().add(1).root(4))
+    return gain
+}
 function doRl4(force = false){
     if(player.cp.lt(getRl4Req()) && !force) return
-    if(player.cp.gte(getRl4Req())) player.mirrorMatter = player.mirrorMatter.add(getMMGain())
-    if(player.cp.gte(getRl4Req())) player.mirrorShard = player.mirrorShard.add(getMSGain())
+    if(player.cp.gte(getRl4Req()) && !force) player.mirrorMatter = player.mirrorMatter.add(getMMGain())
+    if(player.cp.gte(getRl4Req()) && !force) player.mirrorShard = player.mirrorShard.add(getMSGain())
     player.bestMirrorMatterGain = player.bestMirrorMatterGain.max(getMMGain())
+    if(!force) player.mirrorizeTimes = player.mirrorizeTimes.add(mirrorizeTimesGain())
 
     //reset
     player.mass = zero
@@ -41,7 +48,6 @@ function doRl4(force = false){
     player.cpBooster = zero
 
     player.mirrorize = true
-    if(!force) if(player.rl4chall == null) player.mirrorizeTimes = player.mirrorizeTimes.add(1)
     player.mirror = zero
     player.am = zero
     player.en = zero
@@ -67,7 +73,7 @@ function updaterl4(){
     if(player.mirrorize) close("row5cu")
     else open("row5cu")
     if(SecondTab==`镜面里程碑`){
-        w(`MM`,`您有 ${format(player.mirrorMatter)} 镜物质, ${format(player.mirrorShard)} 镜面碎片`)
-        w(`rl4`,`重置以获得 ${format(getMMGain())} 镜物质 + ${format(getMSGain())} 镜面碎片 (需要 ${format(getRl4Req())} 塌缩点以重置)`)
+        w(`MM`,`您有 ${format(player.mirrorMatter)} 镜物质, ${format(player.mirrorShard)} 镜面碎片, ${format(player.mirrorizeTimes)} 镜面化次数`)
+        w(`rl4`,`重置以获得 ${format(getMMGain())} 镜物质 + ${format(getMSGain())} 镜面碎片 + ${format(mirrorizeTimesGain())} 镜面化次数 (需要 ${format(getRl4Req())} 塌缩点以重置)`)
     }
 }

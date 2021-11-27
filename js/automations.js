@@ -97,9 +97,20 @@ var automations = {
         unlocked(){return hasRl4Milestone(6)},
         on:true,
         automate(){
-            if(this.unlocked() && this.on){
-                player.cp = player.cp.add(getCPGain().mul(0.01).mul(diff))
-                player.acp = player.acp.add(getACPGain().mul(0.01).mul(diff))
+            if(this.unlocked() && this.on && player.mass.gte(getRl3Req())){
+                player.cp = player.cp.add(getCPGain().mul(hasRl4Milestone(7)?0.1:0.025).mul(diff))
+                player.acp = player.acp.add(getACPGain().mul(hasRl4Milestone(7)?0.1:0.025).mul(diff))
+            }
+        }
+    },
+    mi:{
+        unlocked(){return hasRl4Milestone(9)},
+        on:true,
+        automate(){
+            if(this.unlocked() && this.on && player.cp.gte(getRl4Req()) && player.rl4chall == null){
+                player.mirrorMatter = player.mirrorMatter.add(getMMGain().mul(0.025).mul(diff))
+                player.mirrorShard = player.mirrorShard.add(getMSGain().mul(0.025).mul(diff))
+                player.mirrorizeTimes = player.mirrorizeTimes.add(mirrorizeTimesGain().mul(0.025).mul(diff))
             }
         }
     },

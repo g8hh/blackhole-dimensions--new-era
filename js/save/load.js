@@ -40,7 +40,7 @@ function load(save = null){
     player.time = Number(t.getTime())
     //window.alert("test")
     fixSave()
-    player.version = 0.4
+    player.version = 0.41
 };
 function save(){
     if(toClearSave){

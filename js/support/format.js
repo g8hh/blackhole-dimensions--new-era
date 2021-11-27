@@ -64,7 +64,7 @@ function format(decimal, precision = 2, small=false) {
     }
   }else if(decimal.lt(1e9)){
     return commaFormat(decimal,precision)
-  }else if(decimal.lt("e10000")){
+  }else if(decimal.lt("e100000")){
     let mantissa = OmegaNum(10).pow(decimal.log10().sub(decimal.log10().floor()))
     let exp = decimal.log10().floor()
     let m = mantissa.toString().split(".")
