@@ -4,7 +4,7 @@ function getTimeSpeed(force = false){
         var boost = player.offlineSpeedup.add(1).root(2.5).div(10).max(2)
         if(force) return boost
         tickspeed = tickspeed.mul(boost)
-        player.offlineSpeedup = player.offlineSpeedup.sub(boost.sub(1).pow(1.5).mul(3).mul(diff))
+        player.offlineSpeedup = player.offlineSpeedup.sub(boost.sub(1).mul(5).mul(diff))
     }
     player.offlineSpeedup = player.offlineSpeedup.max(0)
     return tickspeed

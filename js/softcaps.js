@@ -47,6 +47,28 @@ var softcaps = {
                 return pow
             },
         },
+        mi:{
+            name:"镜面",
+            start(){
+                var start = n("1e616")
+                return start
+            },
+            pow(){
+                var pow = n(1.5)
+                return pow
+            },
+        },
+        cp:{
+            name:"塌缩点",
+            start(){
+                var start = n(1e150)
+                return start
+            },
+            pow(){
+                var pow = n(1.5)
+                return pow
+            },
+        },
     },
     sc2:{
         //sc2: n -> n^(1/pow)
@@ -162,6 +184,17 @@ var softcaps = {
             start(){
                 var start = n(1e100)
                 if(player.mirrorize) start = n(1e25)
+                return start
+            },
+            pow(){
+                var pow = n(2)
+                return pow
+            },
+        },
+        rl2:{
+            name:"空间扭曲",
+            start(){
+                var start = n(2.5)
                 return start
             },
             pow(){

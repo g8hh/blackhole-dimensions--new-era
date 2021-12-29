@@ -16,8 +16,10 @@ function getCuCostPower(row){
     var amount = one
     for(a=1;a<=5;a++){
         if(player.cu.includes(row*10+a)) amount = amount.add(1)
-    }
+    }    
+    if(inRl4Chall(2)) if(amount.gt(getRl4ChallEff(2))) return 1.79e308
     amount = amount.sub(1).div(getCuCostPowerDiv()).add(1)
+
     return amount
 }
 function buycu(id){
