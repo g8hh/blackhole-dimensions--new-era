@@ -1,6 +1,7 @@
 var dimNerf = n(2) //维度间产量变为其二次根
 function getDimNerf(){
     var nerf = n(2)
+    nerf = nerf.rec().add(getRl4ChallRew(2)).rec()
     if(inRl3Chall(13)) nerf = nerf.mul(getRl3ChallEff(13))
     if(inRl3Chall(34)) nerf = nerf.mul(getRl3ChallEff(34))
     return nerf

@@ -44,12 +44,19 @@ newsArray = [
     ["我在人群中看见了拉普拉斯，史瓦西，惠勒和霍金 - 神之海",toggle(6)],
     ["You Need Do ↑↑↓↓←→←→BABA,Then You\'ll Be Able To Reach The Endgame - 陌尘",toggle(14)],
     ["“世俗总要男人无惧无畏~”当然面对QwQ的黑洞质量还是要怂一怂的 - 陌尘",toggle(14)],
-    ["放置游戏就要有滚动新闻！滚动游戏就要有放置新闻！ - ajchen",toggle(14)],
+    ["滚动游戏就要有放置新闻！ - ajchen",toggle(14)],
+    ["放置游戏就要有滚动新闻！ - ajchen",toggle(14)],
     [`一共有${Math.floor(newsNum)}个滚动新闻，你收集全了么？ - ajchen`,toggle(14)],
     [`这算放置游戏还是增量游戏？ - ajchen`,toggle(14)],
     [`我本来想吐槽五小时的梗，但是他更新真的太快了 - ajchen`,toggle(14)],
     [`你的下一个维度，何必是第5维度 - ajchen`,toggle(14)],
     [`有反镜面么 - QwQe308`,player.mirrorize],
+    ["你正在游玩：M键模拟器 - ajchen",toggle(14)],
+    ["黑洞维度怎么玩?pt.3-先买完第一层升级再去买第二层升级,不然会血亏(? - ajchen",toggle(14)],
+    ["黑洞维度怎么玩？pt.4-挑战先打QoL系列的，能帮你省下一个MKeyHolder - ajchen",toggle(14)],
+    [`请勿相信上方任何新闻,后果自负(? - QwQe308`,toggle(1)],
+    ["省流助手：F12 - ajchen",toggle(14)],
+    ["千万不要加速，不然你就和你的离线进度say byebye吧. - CaoJinMing",toggle(3)],
 ];} 
 var s;
 var scrollTimeouts = []; 
