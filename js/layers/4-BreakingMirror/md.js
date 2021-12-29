@@ -107,7 +107,7 @@ function updatemd(){
         if(bulkBuy(player.mirrorMatter,MDcost[i],player.md[i].level,MDcostMult[i]).bulk.gte(1)) grey("md"+i,["dim"])
         else normal("md"+i,["dim"])
     }
-    w("mirrorReserve",`镜像:点击以使镜面三维数量变为镜面零维的1.25次根,镜面二维数量变为镜面一维的1.25次根,以此类推.清空生产倍率. 预计镜像后三维数:${format(player.md[0].num.root(1.25),0)}(x${format(player.md[0].num.root(1.25).div(player.md[3].num))})`)
+    w("mirrorReserve",`镜像:点击以使镜面三维数量变为镜面零维的1.25次根,镜面二维数量变为镜面一维的1.25次根,以此类推.清空生产倍率. 预计镜像后三维数:${format(player.md[0].num.root(1.25),0)}(x${format(player.md[0].num.root(1.25).div(player.md[3].num.max(1)))})`)
     if(player.md[0].num.root(1.25).gt(player.md[3].num)) grey("mirrorReserve",["dim"])
     else normal("mirrorReserve",["dim"])
 }
